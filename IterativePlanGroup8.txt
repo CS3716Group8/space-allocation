@@ -1,0 +1,46 @@
+﻿CS3716 Group 8
+Development Plan: Feature Driven Development
+
+First Iteration (1-Week)
+
+Feature: 
+Creating an availability schedule
+Login System
+Saving and loading of data
+Submit Request
+Classes:
+Location
+TimeSlot
+Schedule
+ScheduleManager
+IOSys
+SaveMethod
+Login
+User
+RequestManager
+SpaceRequest
+
+
+Implementation Details:
+
+	Location
+	Contains data about the location.
+
+	TimeSlot
+	Contains data about the time slot.
+
+	Schedule
+	Holds each location and all their available time slots inside a hash map. 
+
+	ScheduleManager
+	Links to the GUI and creates the schedule based on user selection in the GUI. 
+
+	GUI
+	Allows the user to select the locations and time slots to create the availability schedule.
+
+
+
+
+
+
+
