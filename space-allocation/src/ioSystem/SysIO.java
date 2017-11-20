@@ -1,5 +1,6 @@
 package ioSystem;
 
+import java.io.FileNotFoundException;
 import java.util.List;
 
 public class SysIO<T> {
@@ -10,7 +11,7 @@ public class SysIO<T> {
 		ioMethod = method;
 	}
 	
-	public void save(List<T> data){
+	public void save(List<T> data) throws FileNotFoundException{
 		ioMethod.save(data);
 	}
 	
