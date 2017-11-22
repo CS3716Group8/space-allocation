@@ -38,11 +38,13 @@ public class Schedule {
 	
 	//could potentially be useful for our UI
 	//output the entire schedule
-	public void print()
+	public String toString()
 	{
+		String newStr = null;
 		for (HashMap.Entry<Location, Vector<TimeSlot>> e : hm.entrySet())
 		{
-			System.out.println(e.getKey() + " : " + e.getValue());
+			newStr += e.getKey() + " : " + e.getValue() + "\n";
 		}
+		return newStr;
 	}
 }
