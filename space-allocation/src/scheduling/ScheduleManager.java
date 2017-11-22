@@ -8,6 +8,7 @@ public class ScheduleManager {
 	
 	public ScheduleManager(Schedule schedule)
 	{
+		scheduleVec = new Vector<Schedule>();
 		scheduleVec.addElement(schedule);
 	}
 	

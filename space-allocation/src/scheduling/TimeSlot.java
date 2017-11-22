@@ -29,4 +29,9 @@ public class TimeSlot {
 	{
 		this.isReserved = isReserved;
 	}
+	
+	public String toString(){
+		return timeDuration + "\n" +
+				String.valueOf(isReserved) + "\n";
+	}
 }

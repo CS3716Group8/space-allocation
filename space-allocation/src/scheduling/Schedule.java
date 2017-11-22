@@ -14,6 +14,7 @@ public class Schedule {
 		this.timeSlotVec = timeSlotVec;
 		Iterator<Location> locationVecIt = locationVec.iterator();
 		Iterator<Vector<TimeSlot>> timeSlotVecIt = timeSlotVec.iterator();
+		hm = new HashMap<Location, Vector<TimeSlot>>();
 		
 		while (locationVecIt.hasNext() && timeSlotVecIt.hasNext())
 		{
@@ -40,10 +41,16 @@ public class Schedule {
 	//output the entire schedule
 	public String toString()
 	{
-		String newStr = null;
+		String newStr = "";
 		for (HashMap.Entry<Location, Vector<TimeSlot>> e : hm.entrySet())
 		{
-			newStr += e.getKey() + " : " + e.getValue() + "\n";
+			Location loc = e.getKey();
+			newStr += loc.toString();
+			
+			Vector<TimeSlot> slots = e.getValue();
+			for(TimeSlot s : slots){
+				newStr += s.toString();
+			}
 		}
 		return newStr;
 	}

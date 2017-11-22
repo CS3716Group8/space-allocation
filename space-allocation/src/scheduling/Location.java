@@ -29,4 +29,9 @@ public class Location {
 	{
 		this.roomNo = roomNo;
 	}
+	
+	public String toString(){
+		return name + "\n" +
+				roomNo + "\n";
+	}
 }
