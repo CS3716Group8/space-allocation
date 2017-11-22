@@ -31,7 +31,7 @@ public class TimeSlot {
 	}
 	
 	public String toString(){
-		return timeDuration + "\n" +
-				String.valueOf(isReserved) + "\n";
+		return timeDuration + " " +
+				String.valueOf(isReserved) + " ";
 	}
 }

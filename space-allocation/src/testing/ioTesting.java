@@ -63,6 +63,8 @@ public class ioTesting {
 			e.printStackTrace();
 		}
 		
+		schManager.loadScheduleVec();
+		Vector<Schedule> scheduleVec = schManager.getScheduleVec();
 		RequestManager.test();
 	}
 }

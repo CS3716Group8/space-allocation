@@ -19,7 +19,7 @@ public class Schedule {
 		while (locationVecIt.hasNext() && timeSlotVecIt.hasNext())
 		{
 			hm.put(locationVecIt.next(), timeSlotVecIt.next());
-		}		
+		}
 	}
 	
 	public Vector<Location> getLocationVec()
@@ -51,7 +51,9 @@ public class Schedule {
 			for(TimeSlot s : slots){
 				newStr += s.toString();
 			}
+			newStr += "\n";
 		}
+		
 		return newStr;
 	}
 }

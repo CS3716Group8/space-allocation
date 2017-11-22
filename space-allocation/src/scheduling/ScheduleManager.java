@@ -28,7 +28,6 @@ public class ScheduleManager {
 		try {
 			scheduleIO.save(scheduleVec);
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}		
 	}

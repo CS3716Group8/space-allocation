@@ -31,7 +31,7 @@ public class Location {
 	}
 	
 	public String toString(){
-		return name + "\n" +
-				roomNo + "\n";
+		return name + " " +
+				roomNo + " ";
 	}
 }
