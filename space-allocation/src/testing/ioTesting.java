@@ -7,12 +7,11 @@ import java.util.*;
 import ioSystem.*;
 import scheduling.Schedule;
 import spaceRequests.RequestManager;
+import spaceRequests.SpaceRequest;
 
 public class ioTesting {
 
 	public static void main(String[] args) {
-		
-		SysIO<Schedule> io = new SysIO<Schedule>(new IOSchedule());
 		
 		Location loc1 = new Location("Location1", "1001");
 		TimeSlot s1 = new TimeSlot("60", false);
@@ -54,17 +53,33 @@ public class ioTesting {
 		allSlots.add(loc3Slots);
 		allSlots.add(loc4Slots);
 		
+		
 		Schedule schedule = new Schedule(locations, allSlots);
 		ScheduleManager schManager = new ScheduleManager(schedule);
 		
+		//----SAVING A SCHEDULE----
+		SysIO<Schedule> io = new SysIO<Schedule>(new IOSchedule());
 		try {
 			io.save(schManager.getScheduleVec());
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
+		//----END----
 		
+		//----LOADING A SCHEDULE----
 		schManager.loadScheduleVec();
 		Vector<Schedule> scheduleVec = schManager.getScheduleVec();
-		RequestManager.test();
+		//----END----
+		
+		//NOTE: RequestManager is a Singleton, meaning you never/can't create a RequestManager object.
+		//----CREATING AND SAVING A REQUEST (REQUESTS ARE SAVE UPON CREATION)----
+		RequestManager.createRequest(schedule, s2, "John");
+		RequestManager.createRequest(schedule, s6, "Henry");
+		//----END----
+		
+		//----LOADING/RETREIVING ALL REQUESTS----
+		Vector<SpaceRequest> requests = RequestManager.getRequests();
+		int i = 0;
+		//----END----
 	}
 }

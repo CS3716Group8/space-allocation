@@ -1,12 +1,21 @@
 package spaceRequests;
 
+import java.io.FileNotFoundException;
 import java.util.*;
+
+import ioSystem.*;
+import scheduling.*;
 
 public class RequestManager {
 
 	//----Singleton Creation----
 	private RequestManager() {
-		requests = new LinkedList<SpaceRequest>();
+		
+		SysIO<SpaceRequest> sysIO = new SysIO<SpaceRequest>(new IOSpaceRequest());
+		requests = sysIO.load();
+		
+		if(requests == null)
+			requests = new Vector<SpaceRequest>();
 	}
 	private volatile static RequestManager uniqueInstance;
 	public static RequestManager getInstance(){
@@ -21,11 +30,24 @@ public class RequestManager {
 	}
 	//----END----
 	
-	private List<SpaceRequest> requests = new LinkedList<SpaceRequest>();
+	private Vector<SpaceRequest> requests;
 	
-	public static void test(){
-		System.out.println("Hey");
+	public static Vector<SpaceRequest> getRequests() { return getInstance().requests; }
+	
+	public static void createRequest(Schedule schedule, TimeSlot slot, String requester){
+		
+		SpaceRequest newRequest = new SpaceRequest(schedule, slot, requester);
+		getInstance().requests.add(newRequest);
+		saveRequests();
 	}
 	
+	private static void saveRequests(){
 
+		SysIO<SpaceRequest> sysIO = new SysIO<SpaceRequest>(new IOSpaceRequest());
+		try {
+			sysIO.save(getInstance().requests);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
 }

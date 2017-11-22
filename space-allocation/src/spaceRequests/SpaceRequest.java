@@ -19,6 +19,6 @@ public class SpaceRequest {
 	public String getRequester() {return requester; }
 	
 	public String toString(){
-		return requester + schedule.toString() + slot.toString();
+		return requester + "\n" + slot.toString() + "\n" + schedule.toString();
 	}
 }

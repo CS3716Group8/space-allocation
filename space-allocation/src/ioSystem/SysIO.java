@@ -2,6 +2,7 @@ package ioSystem;
 
 import java.io.FileNotFoundException;
 import java.util.List;
+import java.util.Vector;
 
 public class SysIO<T> {
 
@@ -15,8 +16,8 @@ public class SysIO<T> {
 		ioMethod.save(data);
 	}
 	
-	public List<T> load(){
-		List<T> data = ioMethod.load();
+	public Vector<T> load(){
+		Vector<T> data = ioMethod.load();
 		return data;
 	}
 }

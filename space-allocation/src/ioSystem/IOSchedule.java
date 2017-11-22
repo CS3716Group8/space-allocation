@@ -1,10 +1,7 @@
 package ioSystem;
 
-import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.IOException;
 import java.io.PrintWriter;
 
 import scheduling.*;
@@ -24,11 +21,22 @@ public class IOSchedule extends IOMethod<Schedule> {
 		pw.close();
 	}
 	
-	public List<Schedule> load(){
+	public Vector<Schedule> load(){
 		Vector<Schedule> data = new Vector<Schedule>();;
 
-		List<String> dataStrs = getStringsFromFile();
+		List<String> dataStrs = super.getStringsFromFile(FILENAME);
+		Schedule newSchedule = loadScheduleFromStrings(dataStrs);
 		
+		if(newSchedule != null){
+			data.add(newSchedule);
+		}
+		
+		return data;
+	}
+	
+	public Schedule loadScheduleFromStrings(List<String> dataStrs){
+		
+		Schedule loadedSchedule = null;
 		if(dataStrs != null){
 			
 			Vector<Vector<TimeSlot>> allSlots = new Vector<Vector<TimeSlot>>();
@@ -45,32 +53,13 @@ public class IOSchedule extends IOMethod<Schedule> {
 				}
 			}
 			
-			Schedule loadedSchedule = new Schedule(locations, allSlots);
-			data.add(loadedSchedule);
+			loadedSchedule = new Schedule(locations, allSlots);
 		}
 		else{
-			System.out.println("Could Not Load File");
+			System.out.println("ERROR: Could not create Schedule.");
 		}
-
-		return data;
-	}
-	
-	private List<String> getStringsFromFile(){
 		
-		try {
-			BufferedReader br = new BufferedReader(new FileReader(FILENAME));
-			List<String> lines = new ArrayList<String>();
-			String line = br.readLine();
-			while(line != null){
-				lines.add(line);
-				line = br.readLine();
-			}
-			br.close();
-			return lines;
-		} catch (IOException e) {
-			e.printStackTrace();
-			return null;
-		}
+		return loadedSchedule;
 	}
 	
 	private Vector<TimeSlot> createTimeSlots(String[] lineArray){

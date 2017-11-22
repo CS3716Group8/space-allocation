@@ -35,9 +35,7 @@ public class ScheduleManager {
 	public void loadScheduleVec()
 	{
 		SysIO<Schedule> scheduleIO = new SysIO<Schedule>(new IOSchedule());
-		scheduleIO.load();
+		scheduleVec = scheduleIO.load();
 	}
-
-
 }
 
