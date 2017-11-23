@@ -1,14 +1,27 @@
 package scheduling;
 
+import java.util.UUID;
+
 public class TimeSlot {
 	private String timeDuration;
 	private boolean isReserved;
+	private String id;
 	
 	public TimeSlot(String timeDuration, boolean isReserved)
 	{
 		this.timeDuration = timeDuration;
 		this.isReserved = isReserved;
+		this.id = UUID.randomUUID().toString();
 	}
+	
+	public TimeSlot(String timeDuration, boolean isReserved, String i)
+	{
+		this.timeDuration = timeDuration;
+		this.isReserved = isReserved;
+		this.id = i;
+	}
+	
+	public String getId() { return id; }
 	
 	public String getTimeDuration()
 	{
@@ -32,6 +45,6 @@ public class TimeSlot {
 	
 	public String toString(){
 		return timeDuration + " " +
-				String.valueOf(isReserved) + " ";
+				String.valueOf(isReserved) + " " + id + " ";
 	}
 }

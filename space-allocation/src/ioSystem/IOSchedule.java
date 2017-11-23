@@ -47,7 +47,11 @@ public class IOSchedule extends IOMethod<Schedule> {
 					String[] splitLine = line.split(" ");
 				
 					Location location = createLocation(splitLine[0], splitLine[1]);
-					Vector<TimeSlot> timeSlots = createTimeSlots(splitLine);
+					
+					List<String> slotStrs = new ArrayList<String>(Arrays.asList(splitLine));
+					slotStrs.remove(0);
+					slotStrs.remove(0);
+					Vector<TimeSlot> timeSlots = createTimeSlots(slotStrs);
 					locations.add(location);
 					allSlots.add(timeSlots);
 				}
@@ -56,24 +60,29 @@ public class IOSchedule extends IOMethod<Schedule> {
 			loadedSchedule = new Schedule(locations, allSlots);
 		}
 		else{
-			System.out.println("ERROR: Could not create Schedule.");
+			System.out.println("IOSchedule.java: 63 : No Data in Schedule File.");
 		}
 		
 		return loadedSchedule;
 	}
 	
-	private Vector<TimeSlot> createTimeSlots(String[] lineArray){
+	private Vector<TimeSlot> createTimeSlots(List<String> lineArray){
 		Vector<TimeSlot> slots = new Vector<TimeSlot>();
 		
-		for(int i = 2; i < lineArray.length; i++){
-			
-			if(i % 2 == 0){
-				TimeSlot newSlot = new TimeSlot(lineArray[i], Boolean.parseBoolean(lineArray[i+1]));
+		if(!(lineArray.size() < 3)){
+			for(int i = 0; i < lineArray.size(); i+=3){
+				
+				String requester = lineArray.get(i);
+				Boolean isReserved = Boolean.parseBoolean(lineArray.get(i+1));
+				String id = lineArray.get(i+2);
+	
+				TimeSlot newSlot = new TimeSlot(requester, isReserved, id);
 				slots.add(newSlot);
 			}
 		}
 		return slots;
 	}
+	
 	private Location createLocation(String name, String roomNum){
 		Location loc = new Location(name, roomNum);
 		return loc;

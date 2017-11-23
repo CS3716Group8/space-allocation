@@ -3,7 +3,6 @@ package ioSystem;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
@@ -28,30 +27,14 @@ public class IOSpaceRequest extends IOMethod<SpaceRequest> {
 		Vector<SpaceRequest> data = new Vector<SpaceRequest>();
 		List<String> dataStrs = super.getStringsFromFile(FILENAME);
 		
-		List<String> requestStr = new ArrayList<String>();
 		if(dataStrs != null){
-			for(int i = 0; i < dataStrs.size() - 1; i++){
-				
-				String line = dataStrs.get(i);
-	
-				if(!line.equals("")){
-					requestStr.add(line);
-				}
-				else{
-					//Full request Completed
-					
-					String requester = requestStr.get(0);
-					TimeSlot reqSlot = createSlot(requestStr.get(1));
-					
-					requestStr.remove(0);
-					requestStr.remove(1);
-					
-					Schedule schedule = createSchedule(requestStr);
-					
-					SpaceRequest newRequest = new SpaceRequest(schedule, reqSlot, requester);
+			for(int i = 0; i < dataStrs.size(); i+=3){
+
+					String requester = dataStrs.get(i);
+					TimeSlot reqSlot = createSlot(dataStrs.get(i + 1));
+					String reqId = dataStrs.get(i + 2);
+					SpaceRequest newRequest = new SpaceRequest(reqSlot, requester, reqId);
 					data.add(newRequest);
-					requestStr = new ArrayList<String>();
-				}
 			}
 		}
 		return data;
@@ -61,16 +44,16 @@ public class IOSpaceRequest extends IOMethod<SpaceRequest> {
 		TimeSlot newSlot = null;
 		String[] slotStr = slotData.split(" ");
 		
-		newSlot = new TimeSlot(slotStr[0], Boolean.parseBoolean(slotStr[1]));
+		newSlot = new TimeSlot(slotStr[0], Boolean.parseBoolean(slotStr[1]), slotStr[2]);
 		return newSlot;
 	}
 	
-	private Schedule createSchedule(List<String> scheduleStrs){
-		Schedule sch = null;
-		
-		IOSchedule schIO = new IOSchedule();
-		sch = schIO.loadScheduleFromStrings(scheduleStrs);
-		
-		return sch;
-	}
+//	private Schedule createSchedule(List<String> scheduleStrs){
+//		Schedule sch = null;
+//		
+//		IOSchedule schIO = new IOSchedule();
+//		sch = schIO.loadScheduleFromStrings(scheduleStrs);
+//		
+//		return sch;
+//	}
 }
