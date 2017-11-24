@@ -9,7 +9,7 @@ public class Request extends JFrame
 	JTextField textField2;
 	JLabel label1;
 	JLabel label3;
-	JPanel thePanel;
+	JPanel requestPanel;
 
 	
 	public Request()

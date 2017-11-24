@@ -4,21 +4,22 @@ import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.table.*;
  
-public class SwingCalendar extends JFrame {
+public class SwingCalendar extends JPanel {
  
   DefaultTableModel model;
   Calendar cal = new GregorianCalendar();
   JLabel label;
+  JPanel panel;
  
   SwingCalendar() 
   {
  
    //this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	this.setLocationRelativeTo(null);
-    this.setTitle("Calandar");
+	//this.setLocation(null);
+    this.setName("Calandar");
     this.setSize(500,500);
     this.setLayout(new BorderLayout());
-    this.setVisible(false);
+    this.setVisible(true);
  
  
     label = new JLabel();
