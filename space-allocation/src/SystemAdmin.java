@@ -1,3 +1,4 @@
+import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,12 +12,14 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 
 
 public class SystemAdmin extends JFrame
 {
+	JFrame mainFrame;
 	JButton button1;
 	JButton button2;
 	JButton button3;
@@ -28,20 +31,37 @@ public class SystemAdmin extends JFrame
 	JTextField textField2;
 	JLabel label1;
 	SwingCalendar calendar;
-	
+	SwingCalendar sc;
+	ScheduleDisplay display;
 
 
 	
 	
 	public SystemAdmin()
 	{
-		this.setSize(500,500);
-		this.setLocationRelativeTo(null);
+		mainFrame = new JFrame();
+		mainFrame.setSize(900,500);
+		mainFrame.setLocationRelativeTo(null);
+		mainFrame.setLayout(new BorderLayout());
 		//Toolkit tk = Toolkit.getDefaultToolkit();
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setTitle("System Admin");
+		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		mainFrame.setTitle("System Admin");
 		JPanel thePanel = new JPanel();
-		//JPanel thePanel2 = new JPanel();
+		
+		
+		//display = new ScheduleDisplay();
+		SwingCalendar sc = new SwingCalendar();
+		JPanel thePanel2 = new JPanel();
+		thePanel2.add(sc);
+		JPanel thePanel3 = new JPanel();
+		
+		JTextArea textField1 = new JTextArea(25, 20);
+		//textField1.setColumns(10);
+		
+		thePanel3.add(textField1);
+		
+		
+		
 		JLabel label1 = new JLabel("Room Number:");
 		JLabel label2 = new JLabel("Time:");
 		button1 = new JButton("Create Schedule");
@@ -53,9 +73,9 @@ public class SystemAdmin extends JFrame
 		button5.setToolTipText("View Time Requests");
 		button6 = new JButton("Allocate Time Slot");
 		button7 = new JButton("Deallocate Time Slot");
-		JTextField textField1 = new JTextField();
+		
 		JTextField textField2 = new JTextField();
-		textField1.setColumns(10);
+		
 		textField2.setColumns(10);
 
 
@@ -80,8 +100,11 @@ public class SystemAdmin extends JFrame
 		thePanel.add(button6);
 		thePanel.add(button7);
 
-		this.add(thePanel);
-		this.setVisible(true);
+		mainFrame.add("West",thePanel);
+		mainFrame.add("Center",thePanel2);
+		mainFrame.add("Center",thePanel2);
+		mainFrame.add("East",thePanel3);
+		mainFrame.setVisible(true);
 		
 		
 		
