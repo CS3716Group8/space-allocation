@@ -22,69 +22,78 @@ public class IOSchedule extends IOMethod<Schedule> {
 	}
 	
 	public Vector<Schedule> load(){
-		Vector<Schedule> data = new Vector<Schedule>();;
-
-		List<String> dataStrs = super.getStringsFromFile(FILENAME);
-		Schedule newSchedule = loadScheduleFromStrings(dataStrs);
 		
-		if(newSchedule != null){
-			data.add(newSchedule);
+		List<String> dataStrs = super.getStringsFromFile(FILENAME);
+		Vector<Schedule> schedules = loadScheduleFromStrings(dataStrs);
+		
+		if(schedules == null){
+			schedules = new Vector<Schedule>();
 		}
 		
-		return data;
+		return schedules;
 	}
 	
-	public Schedule loadScheduleFromStrings(List<String> dataStrs){
+	public Vector<Schedule> loadScheduleFromStrings(List<String> dataStrs){
 		
-		Schedule loadedSchedule = null;
+		Vector<Schedule> loadedSchedules = null;
+		
 		if(dataStrs != null){
 			
-			Vector<Vector<TimeSlot>> allSlots = new Vector<Vector<TimeSlot>>();
-			Vector<Location> locations = new Vector<Location>();
+			loadedSchedules = new Vector<Schedule>();
+			
+			Vector<TimeSlot> allSlots = null;
 			for(String line : dataStrs){
 				if(!line.equals("")){
 					
 					String[] splitLine = line.split(" ");
-				
-					Location location = createLocation(splitLine[0], splitLine[1]);
 					
-					List<String> slotStrs = new ArrayList<String>(Arrays.asList(splitLine));
-					slotStrs.remove(0);
-					slotStrs.remove(0);
-					Vector<TimeSlot> timeSlots = createTimeSlots(slotStrs);
-					locations.add(location);
-					allSlots.add(timeSlots);
+					Semesters semester = Semesters.valueOf(splitLine[0]);
+					
+					allSlots = createTimeSlots(splitLine);
+					
+					Schedule newSchedule = new Schedule(allSlots, semester);
+					loadedSchedules.add(newSchedule);
 				}
 			}
 			
-			loadedSchedule = new Schedule(locations, allSlots);
+		//	loadedSchedule = new Schedule(locations, allSlots);
 		}
 		else{
 			System.out.println("IOSchedule.java: 63 : No Data in Schedule File.");
 		}
 		
-		return loadedSchedule;
+		return loadedSchedules;
 	}
 	
-	private Vector<TimeSlot> createTimeSlots(List<String> lineArray){
+	private Vector<TimeSlot> createTimeSlots(String[] lineArray){
+		
 		Vector<TimeSlot> slots = new Vector<TimeSlot>();
 		
-		if(!(lineArray.size() < 3)){
-			for(int i = 0; i < lineArray.size(); i+=3){
+		String id = null;
+		Location loc = null;
+		int startTime = -1;
+		int endTime = -1;
+		WeekDays day = null;
+		
+		if(!(lineArray.length < 2)){
+			
+			for(int i = 1; i < lineArray.length; i+=5){
 				
-				String requester = lineArray.get(i);
-				Boolean isReserved = Boolean.parseBoolean(lineArray.get(i+1));
-				String id = lineArray.get(i+2);
-	
-				TimeSlot newSlot = new TimeSlot(requester, isReserved, id);
-				slots.add(newSlot);
+				id = lineArray[i];
+				startTime = Integer.parseInt(lineArray[i+1]);
+				endTime = Integer.parseInt(lineArray[i+2]);
+				day = WeekDays.valueOf(lineArray[i+3]);
+				loc = Location.valueOf(lineArray[i+4]);
+				
+				TimeSlot slot = new TimeSlot(startTime, endTime, day, loc, id);
+				slots.add(slot);
 			}
 		}
 		return slots;
 	}
-	
-	private Location createLocation(String name, String roomNum){
-		Location loc = new Location(name, roomNum);
-		return loc;
-	}
+//	
+//	private Location createLocation(String name, String roomNum){
+//		Location loc = new Location(name, roomNum);
+//		return loc;
+//	}
 }

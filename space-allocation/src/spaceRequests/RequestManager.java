@@ -34,9 +34,9 @@ public class RequestManager {
 	
 	public static Vector<SpaceRequest> getRequests() { return getInstance().requests; }
 	
-	public static void createRequest(TimeSlot slot, String requester){
+	public static void createRequest(TimeSlot slot, String requester, int startTime, int endTime){
 		
-		SpaceRequest newRequest = new SpaceRequest(slot, requester);
+		SpaceRequest newRequest = new SpaceRequest(slot, requester, startTime, endTime);
 		getInstance().requests.add(newRequest);
 		saveRequests();
 	}

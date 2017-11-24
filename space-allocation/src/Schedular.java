@@ -9,5 +9,4 @@ public class Schedular extends JFrame
 		Login login = new Login();
 		login.launchFrame();
 	}
-
 }

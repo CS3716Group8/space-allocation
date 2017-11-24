@@ -3,48 +3,39 @@ package scheduling;
 import java.util.UUID;
 
 public class TimeSlot {
-	private String timeDuration;
-	private boolean isReserved;
-	private String id;
 	
-	public TimeSlot(String timeDuration, boolean isReserved)
+	private String id;
+	private int startTime;
+	private int endTime;
+	private WeekDays day;
+	private Location location;
+	
+	public TimeSlot(int sTime, int eTime, WeekDays d, Location loc)
 	{
-		this.timeDuration = timeDuration;
-		this.isReserved = isReserved;
+		startTime = sTime;
+		endTime = eTime;
+		day = d;
+		location = loc;
 		this.id = UUID.randomUUID().toString();
 	}
 	
-	public TimeSlot(String timeDuration, boolean isReserved, String i)
+	public TimeSlot(int sTime, int eTime, WeekDays d, Location loc, String i)
 	{
-		this.timeDuration = timeDuration;
-		this.isReserved = isReserved;
+		startTime = sTime;
+		endTime = eTime;
+		day = d;
+		location = loc;
 		this.id = i;
 	}
 	
 	public String getId() { return id; }
 	
-	public String getTimeDuration()
-	{
-		return timeDuration;
-	}
-	
-	public boolean getIsReserved()
-	{
-		return isReserved;
-	}
-	
-	public void setTimeDuration(String timeDuration)
-	{
-		this.timeDuration = timeDuration;
-	}
-	
-	public void setIsReserved(boolean isReserved)
-	{
-		this.isReserved = isReserved;
-	}
+	public int getStartTime() { return startTime; }
+	public int getEndTime() { return endTime; }
+	public WeekDays getDay() { return day; }
+	public Location getLocation() { return location; }
 	
 	public String toString(){
-		return timeDuration + " " +
-				String.valueOf(isReserved) + " " + id + " ";
+		return id + " " + Integer.toString(startTime) + " " + Integer.toString(endTime) + " " + day.name() + " " + location.name() + " ";
 	}
 }

@@ -1,59 +1,34 @@
 package scheduling;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Vector;
 
 public class Schedule {
-	private Vector<Location> locationVec;
-	private Vector<Vector<TimeSlot>> timeSlotVec;
-	private HashMap<Location, Vector<TimeSlot>> hm;
 	
-	public Schedule(Vector<Location> locationVec, Vector<Vector<TimeSlot>> timeSlotVec)
+	private Vector<TimeSlot> timeSlots;
+	private Semesters semester;
+	
+	public Schedule(Vector<TimeSlot> slots, Semesters se)
 	{
-		this.locationVec = locationVec;
-		this.timeSlotVec = timeSlotVec;
-		Iterator<Location> locationVecIt = locationVec.iterator();
-		Iterator<Vector<TimeSlot>> timeSlotVecIt = timeSlotVec.iterator();
-		hm = new HashMap<Location, Vector<TimeSlot>>();
-		
-		while (locationVecIt.hasNext() && timeSlotVecIt.hasNext())
-		{
-			hm.put(locationVecIt.next(), timeSlotVecIt.next());
-		}
+		semester = se;
+		timeSlots = slots;
 	}
 	
-	public Vector<Location> getLocationVec()
+	public Semesters getSemester() { return semester; }
+	public Vector<TimeSlot> getTimeSlots()
 	{
-		return locationVec;
-	}
-	
-	public Vector<Vector<TimeSlot>> getTimeSlotVec()
-	{
-		return timeSlotVec;
-	}
-	
-	public HashMap<Location, Vector<TimeSlot>> getHM()
-	{
-		return hm;
+		return timeSlots;
 	}
 	
 	//could potentially be useful for our UI
 	//output the entire schedule
 	public String toString()
 	{
-		String newStr = "";
-		for (HashMap.Entry<Location, Vector<TimeSlot>> e : hm.entrySet())
-		{
-			Location loc = e.getKey();
-			newStr += loc.toString();
-			
-			Vector<TimeSlot> slots = e.getValue();
-			for(TimeSlot s : slots){
-				newStr += s.toString();
-			}
-			newStr += "\n";
-		}
+		String str = "";
 		
-		return newStr;
+		str = semester.name() + " ";
+		
+		for(TimeSlot ts : timeSlots){
+			str += ts.toString();
+		}
+		return str;
 	}
 }

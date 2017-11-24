@@ -28,12 +28,14 @@ public class IOSpaceRequest extends IOMethod<SpaceRequest> {
 		List<String> dataStrs = super.getStringsFromFile(FILENAME);
 		
 		if(dataStrs != null){
-			for(int i = 0; i < dataStrs.size(); i+=3){
+			for(int i = 0; i < dataStrs.size(); i+=6){
 
 					String requester = dataStrs.get(i);
 					TimeSlot reqSlot = createSlot(dataStrs.get(i + 1));
 					String reqId = dataStrs.get(i + 2);
-					SpaceRequest newRequest = new SpaceRequest(reqSlot, requester, reqId);
+					int reqStart = Integer.parseInt(dataStrs.get(i + 3));
+					int reqEnd = Integer.parseInt(dataStrs.get(i + 4));
+					SpaceRequest newRequest = new SpaceRequest(reqSlot, requester, reqStart, reqEnd, reqId);
 					data.add(newRequest);
 			}
 		}
@@ -44,7 +46,13 @@ public class IOSpaceRequest extends IOMethod<SpaceRequest> {
 		TimeSlot newSlot = null;
 		String[] slotStr = slotData.split(" ");
 		
-		newSlot = new TimeSlot(slotStr[0], Boolean.parseBoolean(slotStr[1]), slotStr[2]);
+		String id = slotStr[0];
+		int startTime = Integer.parseInt(slotStr[1]);
+		int endTime = Integer.parseInt(slotStr[2]);
+		WeekDays day = WeekDays.valueOf(slotStr[3]);
+		Location loc = Location.valueOf(slotStr[4]);
+		
+		newSlot = new TimeSlot(startTime, endTime, day, loc, id);
 		return newSlot;
 	}
 	
