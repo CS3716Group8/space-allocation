@@ -43,11 +43,23 @@ public class ioTesting {
 		//---END---
 		
 		//---Get Time Ranges In a Semester---
-		String[][] times = ScheduleManager.getStartTimesInSchedule(ScheduleManager.getSchedule().get(0));
+		String[][] times = ScheduleManager.getTimesInSchedule(ScheduleManager.getSchedule().get(0));
 		//---END---
 		
-		//Get All Semesters in Availability schedule
+		//---Get All Semesters in Availability schedule---
 		List<Semesters> semesters = ScheduleManager.getSemesters();
+		//---END---
+		
+		//---Get Schedule(s) from a semester---
+		List<Schedule> schs = ScheduleManager.getSchedule(Semesters.Winter);
+		//---END---
+		
+		//---Get Days available from a Location---
+		List<WeekDays> days = ScheduleManager.getDaysFromLocation(Semesters.Winter, Location.Dance);
+		//--END---
+		
+		//---Get Times from day---
+		String[][] timesDay = ScheduleManager.getTimesFromDay(Semesters.Winter, WeekDays.Tuesday);
 		
 		int wait = 0;
 	}

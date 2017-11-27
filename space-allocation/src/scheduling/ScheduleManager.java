@@ -55,7 +55,7 @@ public class ScheduleManager {
 		return locations;
 	}
 	
-	public static String[][] getStartTimesInSchedule(Schedule schedule){
+	public static String[][] getTimesInSchedule(Schedule schedule){
 		
 		List<String> startTimes = new ArrayList<String>();
 		List<String> endTimes = new ArrayList<String>();
@@ -64,6 +64,40 @@ public class ScheduleManager {
 			
 			startTimes.add(Integer.toString(slot.getStartTime()));
 			endTimes.add(Integer.toString(slot.getEndTime()));
+		}
+		
+		String[][] times = new String[startTimes.size()][2];
+		
+		for(int i = 0; i < startTimes.size(); i++){
+			
+			times[i][0] = startTimes.get(i);
+			times[i][1] = endTimes.get(i);
+		}
+		
+		return times;
+	}
+	
+	public static String[][] getTimesFromDay(Semesters semester, WeekDays day){
+		
+		List<String> startTimes = new ArrayList<String>();
+		List<String> endTimes = new ArrayList<String>();
+		
+		for(Schedule schedule : getInstance().schedule){
+			
+			if(schedule.getSemester().equals(semester)){
+				
+				List<TimeSlot> slots = schedule.getTimeSlots();
+				
+				for(TimeSlot slot : slots){
+					
+					if(slot.getDay().equals(day)){
+						
+						startTimes.add(Integer.toString(slot.getStartTime()));
+						endTimes.add(Integer.toString(slot.getEndTime()));
+					}
+				}
+			}
+			
 		}
 		
 		String[][] times = new String[startTimes.size()][2];
@@ -91,6 +125,50 @@ public class ScheduleManager {
 		}
 		
 		return semesters;
+	}
+	
+	public static List<Schedule> getSchedule(Semesters semester){
+		
+		List<Schedule> schs = new ArrayList<Schedule>();
+		
+		for(Schedule schedule : getInstance().schedule){
+			
+			Semesters schSemester = schedule.getSemester();
+			
+			if(semester == schSemester){
+				schs.add(schedule);;
+			}
+		}
+		return schs;
+	}
+	
+	public static List<WeekDays> getDaysFromLocation(Semesters semester, Location location){
+		
+		List<WeekDays> days = new ArrayList<WeekDays>();
+		
+		for(Schedule schedule : getInstance().schedule){
+			
+			Semesters schSemester = schedule.getSemester();
+			
+			if(semester == schSemester){
+				
+				List<TimeSlot> slots = schedule.getTimeSlots();
+				
+				for(TimeSlot slot : slots){
+					
+					if(slot.getLocation().equals(location)){
+						
+						WeekDays tempDay = slot.getDay();
+						
+						if(!days.contains(tempDay)){			
+							days.add(tempDay);
+						}
+					}
+				}
+			}
+		}
+		
+		return days;
 	}
 	
 	private void saveSchedule()
