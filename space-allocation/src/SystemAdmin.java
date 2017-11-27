@@ -19,6 +19,10 @@ import javax.swing.JTextField;
 
 public class SystemAdmin extends JFrame
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	JFrame mainFrame;
 	JButton button1;
 	JButton button2;
