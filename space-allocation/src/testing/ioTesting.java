@@ -35,5 +35,15 @@ public class ioTesting {
 		//---Creating a request---
 		RequestManager.createRequest(s1,"Tod", s1.getStartTime(), s1.getEndTime() - 1);
 		//---END---
+		
+		//---Get All Locations In a Semester---
+		List<String> locations = ScheduleManager.getLocationsInSchedule(ScheduleManager.getSchedule().get(0));
+		//---END---
+		
+		//---Get Time Ranges In a Semester---
+		String[][] times = ScheduleManager.getStartTimesInSchedule(ScheduleManager.getSchedule().get(0));
+		//---END---
+		
+		int wait = 0;
 	}
 }
