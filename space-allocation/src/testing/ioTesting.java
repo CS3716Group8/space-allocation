@@ -22,6 +22,8 @@ public class ioTesting {
 		
 		//---Creating and Saving a schedule----
 		ScheduleManager.createSchedule(winterSlots, Semesters.Winter);
+		ScheduleManager.createSchedule(winterSlots, Semesters.Fall);
+		ScheduleManager.createSchedule(winterSlots, Semesters.Winter);
 		//---END---
 		
 		//---Retreiving a schedule----
@@ -43,6 +45,9 @@ public class ioTesting {
 		//---Get Time Ranges In a Semester---
 		String[][] times = ScheduleManager.getStartTimesInSchedule(ScheduleManager.getSchedule().get(0));
 		//---END---
+		
+		//Get All Semesters in Availability schedule
+		List<Semesters> semesters = ScheduleManager.getSemesters();
 		
 		int wait = 0;
 	}

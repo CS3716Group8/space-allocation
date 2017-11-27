@@ -77,6 +77,22 @@ public class ScheduleManager {
 		return times;
 	}
 	
+	public static List<Semesters> getSemesters(){
+
+		List<Semesters> semesters = new ArrayList<Semesters>();
+		
+		for(Schedule schedule : getInstance().schedule){
+			
+			Semesters semester = schedule.getSemester();
+			
+			if(!semesters.contains(semester)){
+				semesters.add(semester);
+			}
+		}
+		
+		return semesters;
+	}
+	
 	private void saveSchedule()
 	{
 		SysIO<Schedule> scheduleIO = new SysIO<Schedule>(new IOSchedule());
