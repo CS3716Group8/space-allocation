@@ -1,12 +1,21 @@
 import javax.swing.*;
+
+import ioSystem.IOSpaceRequest;
+import scheduling.Location;
+import scheduling.Semesters;
+import spaceRequests.SpaceRequest;
+
 import java.awt.event.*;
+import java.util.List;
 
 
 public class Request extends JFrame
 {
 	JButton button1;
-	JTextField textField1;
-	JTextField textField2;
+	JTextField textField1 = new JTextField();
+	JTextField textField2 = new JTextField();
+	String room;
+	String time;
 	JLabel label1;
 	JLabel label3;
 	JPanel requestPanel;
@@ -18,13 +27,17 @@ public class Request extends JFrame
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setTitle("System ");
+		
+		Location[] loc = Location.class.getEnumConstants();
+		Semesters[] s = Semesters.class.getEnumConstants();
+		JComboBox locations = new JComboBox(loc);
+		JComboBox semesters = new JComboBox(s);
 		JPanel thePanel = new JPanel();
-		JLabel label1 = new JLabel("Room Number:");
-		JLabel label2 = new JLabel("Time:");
-		JLabel label3 = new JLabel("Date (MM/DD/YYYY):");
+		JLabel label1 = new JLabel("Semesters:");
+		JLabel label2 = new JLabel("Location:");
+		JLabel label3 = new JLabel("Day:");
 		button1 = new JButton("Confirm");
-		JTextField textField1 = new JTextField();
-		JTextField textField2 = new JTextField();
+
 		JTextField textField3 = new JTextField();
 		textField1.setColumns(10);
 		textField2.setColumns(10);
@@ -42,6 +55,8 @@ public class Request extends JFrame
 		thePanel.add(label3);
 		thePanel.add(textField3);
 		thePanel.add(button1);
+		thePanel.add(locations);
+		thePanel.add(semesters);
 		this.add(thePanel);
 		this.setVisible(true);
 		
@@ -61,6 +76,14 @@ public class Request extends JFrame
 			
 			if(e.getSource() == button1)
 			{	
+				room = textField1.getText();
+				time = textField2.getText();
+				System.out.println(textField2.getText());
+				System.out.println(room);
+				System.out.println(time);
+				//IOSpaceRequest request = new IOSpaceRequest();
+				//request.save(textField1.getText());
+				
 				String st = "Process Complete";
 				JOptionPane.showMessageDialog(null, st);		
 			}

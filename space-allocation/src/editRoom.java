@@ -10,6 +10,10 @@ import java.awt.*;
 
 public class editRoom extends JFrame
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	JButton button1;
 	JTextField textField1;
 	JLabel label1;
