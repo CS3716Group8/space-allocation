@@ -13,45 +13,89 @@ import java.awt.event.*;
 import java.util.List;
 
 
-public class Request extends JFrame
+public class Creator extends JFrame implements ItemListener
 {
 	JButton button1;
-	JTextField textField1 = new JTextField();
-	JTextField textField2 = new JTextField();
+
 	
 	JLabel label1;
 	JLabel label3;
 	JPanel requestPanel;
 	JComboBox <Semesters>semesters;
 	JComboBox <Location>locations;
-	List<WeekDays> day;
+	JComboBox <WeekDays>days;
 	JComboBox <TimeSlot>timeS;
 	JComboBox <TimeSlot>timeF;
-
+	JCheckBox mon;
+	JCheckBox tue;
+	JCheckBox wed;
+	JCheckBox thurs;
+	JCheckBox fri;
+	JCheckBox sat;
+	JCheckBox sun;
 	
-	public Request()
+	public Creator()
 	{
-		this.setSize(400,150);
+		this.setSize(450,150);
 		this.setLocationRelativeTo(null);
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setTitle("System ");
 		
-		//Location[] loc = Location.class.getEnumConstants();
-		//Semesters[] s = Semesters.class.getEnumConstants();
-		List<Semesters> s = ScheduleManager.getSemesters();
-		List<String> loc = ScheduleManager.getLocationsInSchedule(ScheduleManager.getSchedule().get(0));
-		List<WeekDays> day = ScheduleManager.getDaysFromLocation(Semesters.Winter, Location.Dance);
+		this.setTitle("Creator");
+		
+		Location[] loc = Location.class.getEnumConstants();
+		Semesters[] s = Semesters.class.getEnumConstants();
+		WeekDays [] day = WeekDays.class.getEnumConstants();
+		
 		List<String> time1 = ScheduleManager.getDayTimeStart(Semesters.Winter, WeekDays.Tuesday);
 		List<String> time2 = ScheduleManager.getDayTimeEnd(Semesters.Winter, WeekDays.Tuesday);
 		
+
+		semesters = new JComboBox(s);
 		
-		semesters = new JComboBox<Semesters>();
 		
 		
-		locations = new JComboBox(loc.toArray());
-		JComboBox days = new JComboBox(day.toArray());
-		JComboBox timeS = new JComboBox(time1.toArray());
-		JComboBox timeF = new JComboBox(time2.toArray());
+
+        //Create the check boxes.
+        mon = new JCheckBox("Monday");
+        mon.setMnemonic(KeyEvent.VK_C);
+        mon.setSelected(false);
+        
+        tue = new JCheckBox("Tuesday");
+        tue.setMnemonic(KeyEvent.VK_C);
+        tue.setSelected(false);
+ 
+        wed = new JCheckBox("Wednesday");
+        wed.setMnemonic(KeyEvent.VK_C);
+        wed.setSelected(false);
+ 
+        thurs = new JCheckBox("Thursday");
+        thurs.setMnemonic(KeyEvent.VK_C);
+        thurs.setSelected(false);
+        
+        fri = new JCheckBox("Friday");
+        fri.setMnemonic(KeyEvent.VK_C);
+        fri.setSelected(false);
+        
+        sat = new JCheckBox("Saturday");
+        sat.setMnemonic(KeyEvent.VK_C);
+        sat.setSelected(false);
+        
+        sun = new JCheckBox("Sunday");
+        sun.setMnemonic(KeyEvent.VK_C);
+        sun.setSelected(false);
+        
+        //Register a listener for the check boxes.
+        mon.addItemListener(this);
+        tue.addItemListener(this);
+        wed.addItemListener(this);
+        thurs.addItemListener(this);
+        fri.addItemListener(this);
+        sat.addItemListener(this);
+        sun.addItemListener(this);
+		
+		locations = new JComboBox(loc);
+		days = new JComboBox(day);
+		JTextField timeS = new JTextField("",3);
+		JTextField timeF = new JTextField("",3);
 		JPanel thePanel = new JPanel();
 		JLabel label1 = new JLabel("Semester:");
 		JLabel label2 = new JLabel("Location:");
@@ -75,10 +119,6 @@ public class Request extends JFrame
 		    }
 		});
 
-		JTextField textField3 = new JTextField();
-		textField1.setColumns(10);
-		textField2.setColumns(10);
-		textField3.setColumns(10);
 
 
 		ListenForButton lForButton = new ListenForButton();
@@ -90,14 +130,19 @@ public class Request extends JFrame
 		thePanel.add(label2);
 		thePanel.add(locations);
 		thePanel.add(label3);
-		thePanel.add(days);
+		//thePanel.add(days);
 		thePanel.add(label4);
 		thePanel.add(timeS);
 		thePanel.add(label5);
 		thePanel.add(timeF);
+		thePanel.add(mon);
+		thePanel.add(tue);
+		thePanel.add(wed);
+		thePanel.add(thurs);
+		thePanel.add(fri);
+		thePanel.add(sat);
+		thePanel.add(sun);
 		thePanel.add(button1);
-		//thePanel.add(locations);
-	//	thePanel.add(semesters);
 		this.add(thePanel);
 		this.setVisible(true);
 		
@@ -118,40 +163,22 @@ public class Request extends JFrame
 			if(e.getSource() == button1)
 			{	
 				
-				System.out.println(textField2.getText());
-
-				//IOSpaceRequest request = new IOSpaceRequest();
-				//request.save(textField1.getText());
-				//int t1 = timeS.
-				
-				//TimeSlot si = new TimeSlot(9,12, WeekDays.Monday , Location.Dance);
-				//RequestManager.createRequest(s1,"Tod", s1.getStartTime(), s1.getEndTime() - 1);
-				
+	
 				
 				String st = "Process Complete";
-				JOptionPane.showMessageDialog(null, st);	
-		
+				JOptionPane.showMessageDialog(null, st);		
 			}
 			
 		}
 		
 	}
-/*
-	public void actionPerformed(ActionEvent e)
-    {
-        String item = (String)mainComboBox.getSelectedItem();
-        Object o = subItems.get( item );
 
-        if (o == null)
-        {
-            subComboBox.setModel( new DefaultComboBoxModel() );
-        }
-        else
-        {
-            subComboBox.setModel( new DefaultComboBoxModel( (String[])o ) );
-        }
-    }
-	
-	*/
+
+	@Override
+	public void itemStateChanged(ItemEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	
 }

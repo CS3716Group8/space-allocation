@@ -128,9 +128,10 @@ public class SystemAdmin extends JFrame
 //***Create Schedule**********************************************************************************				
 			if(e.getSource() == button1)
 			{	
-				String st = "Schedule Created";
-				JOptionPane.showMessageDialog(null, st);	
+				//String st = "Schedule Created";
+				//JOptionPane.showMessageDialog(null, st);	
 				calendar = new SwingCalendar();
+				new Creator();
 			}
 //***Display Schedule*********************************************************************************				
 			if(e.getSource() == button2)
