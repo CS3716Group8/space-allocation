@@ -15,15 +15,21 @@ public class ioTesting {
 		
 		TimeSlot s1 = new TimeSlot(9,12, WeekDays.Monday , Location.Dance);
 		TimeSlot s2 = new TimeSlot(14,16, WeekDays.Tuesday, Location.Dance);
+		TimeSlot s3 = new TimeSlot(16,20, WeekDays.Friday , Location.Band);
+		TimeSlot s4 = new TimeSlot(14,16, WeekDays.Wednesday, Location.Gym);
 		
 		Vector<TimeSlot> winterSlots = new Vector<TimeSlot>();
+		Vector<TimeSlot> fallSlots = new Vector<TimeSlot>();
+		
 		winterSlots.add(s1);
 		winterSlots.add(s2);
+		fallSlots.add(s3);
+		fallSlots.add(s4);
 		
 		//---Creating and Saving a schedule----
 		ScheduleManager.createSchedule(winterSlots, Semesters.Winter);
-		ScheduleManager.createSchedule(winterSlots, Semesters.Fall);
-		ScheduleManager.createSchedule(winterSlots, Semesters.Winter);
+		ScheduleManager.createSchedule(fallSlots, Semesters.Fall);
+
 		//---END---
 		
 		//---Retreiving a schedule----
@@ -36,6 +42,7 @@ public class ioTesting {
 		
 		//---Creating a request---
 		RequestManager.createRequest(s1,"Tod", s1.getStartTime(), s1.getEndTime() - 1);
+		RequestManager.createRequest(s3,"Henry", s3.getStartTime(), s3.getEndTime() - 1);
 		//---END---
 		
 		//---Get All Locations In a Semester---
