@@ -2,6 +2,7 @@ import javax.swing.*;
 
 import ioSystem.IOSpaceRequest;
 import scheduling.Location;
+import scheduling.ScheduleManager;
 import scheduling.Semesters;
 import spaceRequests.SpaceRequest;
 
@@ -28,15 +29,23 @@ public class Request extends JFrame
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setTitle("System ");
 		
-		Location[] loc = Location.class.getEnumConstants();
-		Semesters[] s = Semesters.class.getEnumConstants();
-		JComboBox locations = new JComboBox(loc);
-		JComboBox semesters = new JComboBox(s);
+		//Location[] loc = Location.class.getEnumConstants();
+		//Semesters[] s = Semesters.class.getEnumConstants();
+		List<Semesters> s = ScheduleManager.getSemesters();
+		List<String> loc = ScheduleManager.getLocationsInSchedule(ScheduleManager.getSchedule().get(0));
+	
+		JComboBox semesters = new JComboBox(s.toArray());
+		JComboBox locations = new JComboBox(semesters.getSelectedObjects());
+		JComboBox days = new JComboBox();
+		JComboBox timeS = new JComboBox();
+		JComboBox timeF = new JComboBox();
 		JPanel thePanel = new JPanel();
-		JLabel label1 = new JLabel("Semesters:");
+		JLabel label1 = new JLabel("Semester:");
 		JLabel label2 = new JLabel("Location:");
 		JLabel label3 = new JLabel("Day:");
-		button1 = new JButton("Confirm");
+		JLabel label4 = new JLabel("Time:");
+		JLabel label5 = new JLabel("to");
+		button1 = new JButton("Submit");
 
 		JTextField textField3 = new JTextField();
 		textField1.setColumns(10);
@@ -49,14 +58,18 @@ public class Request extends JFrame
 		button1.addActionListener(lForButton);
 			
 		thePanel.add(label1);
-		thePanel.add(textField1);
-		thePanel.add(label2);
-		thePanel.add(textField2);
-		thePanel.add(label3);
-		thePanel.add(textField3);
-		thePanel.add(button1);
-		thePanel.add(locations);
 		thePanel.add(semesters);
+		thePanel.add(label2);
+		thePanel.add(locations);
+		thePanel.add(label3);
+		thePanel.add(days);
+		thePanel.add(label4);
+		thePanel.add(timeS);
+		thePanel.add(label5);
+		thePanel.add(timeF);
+		thePanel.add(button1);
+		//thePanel.add(locations);
+	//	thePanel.add(semesters);
 		this.add(thePanel);
 		this.setVisible(true);
 		
@@ -92,4 +105,21 @@ public class Request extends JFrame
 		
 	}
 
+	/*public void actionPerformed(ActionEvent e)
+    {
+        String item = (String)mainComboBox.getSelectedItem();
+        Object o = subItems.get( item );
+
+        if (o == null)
+        {
+            subComboBox.setModel( new DefaultComboBoxModel() );
+        }
+        else
+        {
+            subComboBox.setModel( new DefaultComboBoxModel( (String[])o ) );
+        }
+    }
+	
+	*/
+	
 }
