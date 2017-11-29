@@ -41,6 +41,37 @@ public class RequestManager {
 		saveRequests();
 	}
 	
+	public static List<Semesters> getAllSemesters(){
+		List<Semesters> allSem = new ArrayList<Semesters>();
+		
+		for(SpaceRequest request : getInstance().requests){
+			
+			Semesters sem = request.getSemesterOfSlot();
+			
+			if(!allSem.contains(sem)){
+				allSem.add(sem);
+			}
+		}
+		
+		return allSem;
+	}
+	
+	public static List<SpaceRequest> getRequestsInSemester(Semesters sem){
+		
+		List<SpaceRequest> reqs = new ArrayList<SpaceRequest>();
+		
+		for(SpaceRequest request : getInstance().requests){
+			
+			Semesters currSem = request.getSemesterOfSlot();
+			
+			if(currSem.equals(sem)){
+				reqs.add(request);
+			}
+		}
+
+		return reqs;
+	}
+	
 	private static void saveRequests(){
 
 		SysIO<SpaceRequest> sysIO = new SysIO<SpaceRequest>(new IOSpaceRequest());

@@ -27,9 +27,28 @@ public class SpaceRequest {
 		id = i;
 	}
 	
+	public int getStartTime(){ return reqStartTime; }
+	public int getEndTime(){ return reqEndTime; }
 	public String getId(){ return id;}
 	public TimeSlot getSlot() { return slot; }
 	public String getRequester() {return requester; }
+	public Location getLocationOfSlot() { return slot.getLocation(); }
+	public Semesters getSemesterOfSlot(){
+		Semesters sem = null;
+		
+		for(Schedule sch : ScheduleManager.getSchedule()){
+			
+			for(TimeSlot tempSlot : sch.getTimeSlots()){
+				
+				if(slot.getId().equals(tempSlot.getId())){
+					
+					sem = sch.getSemester();
+				}
+			}
+		}
+		
+		return sem;
+	}
 	
 	public String toString(){
 		return requester + "\n" + slot.toString() + "\n" +id + "\n" + reqStartTime + "\n" + reqEndTime + "\n";
