@@ -2,6 +2,7 @@ import javax.swing.*;
 
 import ioSystem.IOSpaceRequest;
 import scheduling.Location;
+import scheduling.Schedule;
 import scheduling.ScheduleManager;
 import scheduling.Semesters;
 import scheduling.TimeSlot;
@@ -10,6 +11,7 @@ import spaceRequests.RequestManager;
 import spaceRequests.SpaceRequest;
 
 import java.awt.event.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
@@ -28,8 +30,6 @@ public class Request extends JFrame
 	JComboBox<WeekDays> days = new JComboBox();
 	List<WeekDays> day;
 
-
-	
 	public Request()
 	{
 		this.setSize(400,150);
@@ -37,7 +37,7 @@ public class Request extends JFrame
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setTitle("System ");
 		createCB();
-		populateCB();
+		populateSemesterCB();
 	
 
 		JPanel thePanel = new JPanel();
@@ -49,7 +49,7 @@ public class Request extends JFrame
 		button1 = new JButton("Submit");
 		
 		
-//Action Listeners for ComboBoxes
+		//Action Listeners for ComboBoxes
 		semesters.addActionListener (new ActionListener () {
 		    public void actionPerformed(ActionEvent e) {
 		        System.out.println("Semester Changed");
@@ -104,12 +104,10 @@ public class Request extends JFrame
 		thePanel.add(button1);
 		this.add(thePanel);
 		this.setVisible(true);
-		
-
 	}
 
 //****************************************************************************
-private void populateCB() {
+private void populateSemesterCB() {
 	List<Semesters> allSemesters = RequestManager.getAllSemesters();
 	
 	if(allSemesters != null){		
@@ -125,8 +123,29 @@ private void populateCB() {
 //****************************************************************************
 //****************************************************************************
 private void populateLocationCB() {
-	Location[] loc = Location.class.getEnumConstants();
-	locations = new JComboBox<Location>(loc);
+	
+	removePreviousCBLocations();
+	
+	Semesters sem = getSelectedSemester();
+	List<Schedule> schs = ScheduleManager.getSchedule(sem);
+	
+	List<Location> allLocs = new ArrayList<Location>();
+	List<String> locStrings = new ArrayList<String>();
+	for (Schedule sch : schs){
+		locStrings = ScheduleManager.getLocationsInSchedule(sch);
+		
+		for(String s : locStrings){
+			
+			Location currLoc = Location.valueOf(s);
+			if(!allLocs.contains(currLoc)){
+				allLocs.add(Location.valueOf(s));
+			}
+		}
+	}
+	
+	for(Location loc : allLocs){
+		locations.addItem(loc);
+	}
 	
 	populateDayCB();
 }
@@ -136,88 +155,27 @@ private void populateLocationCB() {
 //****************************************************************************
 private void populateDayCB() {
 	
+	removePreviousCBDays();
+	
 	Location x = (Location) locations.getSelectedItem();
 	Semesters y = (Semesters) semesters.getSelectedItem();
-	
+		
 	List<WeekDays> day = ScheduleManager.getDaysFromLocation(y, x);
-	//temp assignment
-	day = ScheduleManager.getDaysFromLocation(Semesters.Fall, Location.Dance);
-	
-	
-	if(day != null){
-		for(WeekDays d : day){
-		days.addItem(d);
+	System.out.println(day.toString());
+	if(!day.isEmpty()){
+
+		for(WeekDays d : day){	
+			days.addItem(d);
 		}
 	}
 	
-	else if(day == null){
-	
-	day = ScheduleManager.getDaysFromLocation(Semesters.Fall, Location.Dance);
-	for(WeekDays d : day){
-		days.addItem(d);
-		}
-	}
-	
-	
-/************************************************************	
-//Location Dance for all semesters
-	if(x.equals(Location.Dance)&& y.equals(Semesters.Winter)){
-		
-	day = ScheduleManager.getDaysFromLocation(Semesters.Winter, Location.Dance);
-	
-	}
-	
-	else if(x.equals(Location.Dance)&& y.equals(Semesters.Fall)){
-		
-	day = ScheduleManager.getDaysFromLocation(Semesters.Fall, Location.Dance);
-	
-	}
-	else if(x.equals(Location.Dance)&& y.equals(Semesters.Spring)){
-		
-	day = ScheduleManager.getDaysFromLocation(Semesters.Spring, Location.Dance);
-//Location Gym for all semesters
-	}
-	else if(x.equals(Location.Gym)&& y.equals(Semesters.Winter)){
-		
-	day = ScheduleManager.getDaysFromLocation(Semesters.Winter, Location.Gym);
-	
-	}
-	else if(x.equals(Location.Gym)&& y.equals(Semesters.Fall)){
-		
-	day = ScheduleManager.getDaysFromLocation(Semesters.Fall, Location.Gym);
-	
-	}
-	else if(x.equals(Location.Gym)&& y.equals(Semesters.Spring)){
-		
-	day = ScheduleManager.getDaysFromLocation(Semesters.Spring, Location.Gym);
-	
-	}
-//Location Band for all semesters
-	else if(x.equals(Location.Band)&& y.equals(Semesters.Spring)){
-		
-	day = ScheduleManager.getDaysFromLocation(Semesters.Spring, Location.Band);
-	
-	}
-	else if(x.equals(Location.Band)&& y.equals(Semesters.Fall)){
-		
-	day = ScheduleManager.getDaysFromLocation(Semesters.Fall, Location.Band);
-	
-	}
-	else if(x.equals(Location.Band)&& y.equals(Semesters.Winter)){
-		
-	day = ScheduleManager.getDaysFromLocation(Semesters.Winter, Location.Band);
-	
-	}
-************************************************************/
 	populateTimeCB();
-	
 }
 
 //****************************************************************************
 private void populateTimeCB() {
 	
-	//List<String> time1 = ScheduleManager.getDayTimeStart(Semesters.Winter, WeekDays.Tuesday);
-	//List<String> time2 = ScheduleManager.getDayTimeEnd(Semesters.Winter, WeekDays.Tuesday);
+	removePreviousCBTimes();
 	
 	WeekDays d = (WeekDays) days.getSelectedItem();
 	Semesters s = (Semesters) semesters.getSelectedItem();
@@ -225,13 +183,41 @@ private void populateTimeCB() {
 	List<String> time1 = ScheduleManager.getDayTimeStart(s, d);
 	List<String> time2 = ScheduleManager.getDayTimeEnd(s, d);
 
-	timeS = new JComboBox(time1.toArray());
-	timeF = new JComboBox(time2.toArray());
+	int startTime = 0;
+	int endTime = 0;
+	for(int i = 0; i < time1.size(); i++){
+		startTime = Integer.parseInt(time1.get(i));
+		endTime = Integer.parseInt(time2.get(i));
+	}
 	
-
+	int tempSTime = startTime;	
+	while(tempSTime < endTime){		
+		timeS.addItem(tempSTime);
+		tempSTime += 1;
+	}
+	
+	int tempETime = endTime;
+	while(tempETime > startTime){
+		
+		timeF.addItem(tempETime);
+		tempETime -= 1;
+	}
 }
 
+private void removePreviousCBLocations(){
+	
+	locations.removeAllItems();
+}
+private void removePreviousCBDays(){
+	
+	days.removeAllItems();
+}
 
+private void removePreviousCBTimes(){
+	
+	timeS.removeAllItems();
+	timeF.removeAllItems();
+}
 //****************************************************************************
 //****************************************************************************
 	private void createCB() {
@@ -245,7 +231,6 @@ private void populateTimeCB() {
 		this.add(days);
 		this.add(timeS);
 		this.add(timeF);
-		
 	}
 
 //****************************************************************************
@@ -256,53 +241,25 @@ private void populateTimeCB() {
 		
 		public void actionPerformed(ActionEvent e)
 		{
-			
 			// Check if the source of the event was the button
 			
 			if(e.getSource() == button1)
 			{	
-				
-
 				String t1 = (String) timeS.getSelectedItem();
 				Object t2 = timeF.getSelectedItem();
 				System.out.println(t1.toString());
 				System.out.println(t2.toString());
 	
-			
-				
 				WeekDays d = (WeekDays) days.getSelectedItem();
 				Location l = (Location) locations.getSelectedItem();
 				
-				
-				//TimeSlot s1 = new TimeSlot(i,k, d, l);
-				//RequestManager.createRequest(s1,"User", s1.getStartTime(), s1.getEndTime() - 1);
-				//Vector<TimeSlot> winterSlots = new Vector<TimeSlot>();
-				//ScheduleManager.createSchedule(winterSlots, Semesters.Winter);
-				
 				String st = "Process Complete";
 				JOptionPane.showMessageDialog(null, st);	
-		
 			}
-			
-		}
-		
+		}		
 	}
-/*
-	public void actionPerformed(ActionEvent e)
-    {
-        String item = (String)mainComboBox.getSelectedItem();
-        Object o = subItems.get( item );
-
-        if (o == null)
-        {
-            subComboBox.setModel( new DefaultComboBoxModel() );
-        }
-        else
-        {
-            subComboBox.setModel( new DefaultComboBoxModel( (String[])o ) );
-        }
-    }
 	
-	*/
-	
+	private Semesters getSelectedSemester(){
+		return (Semesters)semesters.getSelectedItem();
+	}
 }

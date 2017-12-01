@@ -69,22 +69,6 @@ public class AllocationWindow extends JFrame {
 		slotsPanel.setLayout(new GridLayout(0, 2, 0, 0));
 		
 		displaySpaceRequests();
-		
-//		JPanel slot = new JPanel();
-//		slotsPanel.add(slot);
-//		slot.setLayout(new GridLayout(4, 1, 0, 0));
-//		
-//		JLabel nameLbl = new JLabel("Name");
-//		slot.add(nameLbl);
-//		
-//		JLabel locationLbl = new JLabel("Location");
-//		slot.add(locationLbl);
-//		
-//		JLabel timeLbl = new JLabel("Time Requested: 0:00 - 0:00");
-//		slot.add(timeLbl);
-//		
-//		JButton allocBtn = new JButton("Allocate");
-//		slot.add(allocBtn);
 	}
 	
 	private void displaySpaceRequests(){

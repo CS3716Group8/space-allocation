@@ -29,7 +29,7 @@ public class AllocatedSlot
 		String str = "";
 		
 		str += semester.name() + " ";
-		str += requestorName + " " + location + " " + startTime + " " + endTime + "/n";
+		str += requestorName + " " + location + " " + startTime + " " + endTime + "\n";
 		return str;
 	}
 }

@@ -111,7 +111,7 @@ public class ScheduleManager {
 		return times;
 	}
 	
-public static List<String> getDayTimeStart(Semesters semester, WeekDays day){
+	public static List<String> getDayTimeStart(Semesters semester, WeekDays day){
 		
 		List<String> startTimes = new ArrayList<String>();
 		
@@ -134,28 +134,27 @@ public static List<String> getDayTimeStart(Semesters semester, WeekDays day){
 		return startTimes;
 	}
 
-public static List<String> getDayTimeEnd(Semesters semester, WeekDays day){
+	public static List<String> getDayTimeEnd(Semesters semester, WeekDays day){
 	
-	List<String> endTimes = new ArrayList<String>();
-	
-	for(Schedule schedule : getInstance().schedule){
+		List<String> endTimes = new ArrayList<String>();
 		
-		if(schedule.getSemester().equals(semester)){
+		for(Schedule schedule : getInstance().schedule){
 			
-			List<TimeSlot> slots = schedule.getTimeSlots();
-			
-			for(TimeSlot slot : slots){
+			if(schedule.getSemester().equals(semester)){
 				
-				if(slot.getDay().equals(day)){
-
-					endTimes.add(Integer.toString(slot.getEndTime()));
+				List<TimeSlot> slots = schedule.getTimeSlots();
+				
+				for(TimeSlot slot : slots){
+					
+					if(slot.getDay().equals(day)){
+	
+						endTimes.add(Integer.toString(slot.getEndTime()));
+					}
 				}
 			}
 		}
-		
+		return endTimes;
 	}
-	return endTimes;
-}
 	
 	public static List<Semesters> getSemesters(){
 
