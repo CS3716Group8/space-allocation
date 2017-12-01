@@ -11,6 +11,7 @@ import spaceRequests.SpaceRequest;
 
 import java.awt.event.*;
 import java.util.List;
+import java.util.Vector;
 
 
 public class Creator extends JFrame implements ItemListener
@@ -43,15 +44,19 @@ public class Creator extends JFrame implements ItemListener
 		
 		Location[] loc = Location.class.getEnumConstants();
 		Semesters[] s = Semesters.class.getEnumConstants();
-		WeekDays [] day = WeekDays.class.getEnumConstants();
-		
-		List<String> time1 = ScheduleManager.getDayTimeStart(Semesters.Winter, WeekDays.Tuesday);
-		List<String> time2 = ScheduleManager.getDayTimeEnd(Semesters.Winter, WeekDays.Tuesday);
-		
 
-		semesters = new JComboBox(s);
+		semesters = new JComboBox<Semesters>(s);
+		locations = new JComboBox<Location>(loc);
 		
-		
+		JTextField timeS = new JTextField("",3);
+		JTextField timeF = new JTextField("",3);
+		JPanel thePanel = new JPanel();
+		JLabel label1 = new JLabel("Semester:");
+		JLabel label2 = new JLabel("Location:");
+		JLabel label3 = new JLabel("Day:");
+		JLabel label4 = new JLabel("Time:");
+		JLabel label5 = new JLabel("to");
+		button1 = new JButton("Submit");
 		
 
         //Create the check boxes.
@@ -92,35 +97,6 @@ public class Creator extends JFrame implements ItemListener
         sat.addItemListener(this);
         sun.addItemListener(this);
 		
-		locations = new JComboBox(loc);
-		days = new JComboBox(day);
-		JTextField timeS = new JTextField("",3);
-		JTextField timeF = new JTextField("",3);
-		JPanel thePanel = new JPanel();
-		JLabel label1 = new JLabel("Semester:");
-		JLabel label2 = new JLabel("Location:");
-		JLabel label3 = new JLabel("Day:");
-		JLabel label4 = new JLabel("Time:");
-		JLabel label5 = new JLabel("to");
-		button1 = new JButton("Submit");
-		
-		semesters.addActionListener (new ActionListener () {
-		    public void actionPerformed(ActionEvent e) {
-		        System.out.println("test");
-		      //  List<WeekDays> newday = ScheduleManager.getDaysFromLocation(semesters.getSelectedItem(), Location.Dance);
-		        locations.repaint();
-		    }
-		});
-		
-		days.addActionListener (new ActionListener () {
-		    public void actionPerformed(ActionEvent e) {
-		        System.out.println("test");
-		        locations.repaint();
-		    }
-		});
-
-
-
 		ListenForButton lForButton = new ListenForButton();
 
 		button1.addActionListener(lForButton);
@@ -130,7 +106,6 @@ public class Creator extends JFrame implements ItemListener
 		thePanel.add(label2);
 		thePanel.add(locations);
 		thePanel.add(label3);
-		//thePanel.add(days);
 		thePanel.add(label4);
 		thePanel.add(timeS);
 		thePanel.add(label5);
@@ -163,7 +138,10 @@ public class Creator extends JFrame implements ItemListener
 			if(e.getSource() == button1)
 			{	
 				
-	
+				TimeSlot si = new TimeSlot(9,12, WeekDays.Monday , Location.Dance);
+				Vector<TimeSlot> newSlots = new Vector<TimeSlot>();
+				newSlots.add(si);
+				ScheduleManager.createSchedule(newSlots, Semesters.Winter);
 				
 				String st = "Process Complete";
 				JOptionPane.showMessageDialog(null, st);		

@@ -11,6 +11,7 @@ import spaceRequests.SpaceRequest;
 
 import java.awt.event.*;
 import java.util.List;
+import java.util.Vector;
 
 
 public class Request extends JFrame
@@ -19,14 +20,14 @@ public class Request extends JFrame
 	JTextField textField1 = new JTextField();
 	JTextField textField2 = new JTextField();
 	
-	JLabel label1;
-	JLabel label3;
-	JPanel requestPanel;
 	JComboBox <Semesters>semesters;
 	JComboBox <Location>locations;
+
+	JComboBox timeS = new JComboBox<TimeSlot>();
+	JComboBox timeF = new JComboBox<TimeSlot>();
+	JComboBox<WeekDays> days = new JComboBox();
 	List<WeekDays> day;
-	JComboBox <TimeSlot>timeS;
-	JComboBox <TimeSlot>timeF;
+
 
 	
 	public Request()
@@ -35,23 +36,10 @@ public class Request extends JFrame
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setTitle("System ");
-		
-		//Location[] loc = Location.class.getEnumConstants();
-		//Semesters[] s = Semesters.class.getEnumConstants();
-		List<Semesters> s = ScheduleManager.getSemesters();
-		List<String> loc = ScheduleManager.getLocationsInSchedule(ScheduleManager.getSchedule().get(0));
-		List<WeekDays> day = ScheduleManager.getDaysFromLocation(Semesters.Winter, Location.Dance);
-		List<String> time1 = ScheduleManager.getDayTimeStart(Semesters.Winter, WeekDays.Tuesday);
-		List<String> time2 = ScheduleManager.getDayTimeEnd(Semesters.Winter, WeekDays.Tuesday);
-		
-		
-		semesters = new JComboBox<Semesters>();
-		
-		
-		locations = new JComboBox(loc.toArray());
-		JComboBox days = new JComboBox(day.toArray());
-		JComboBox timeS = new JComboBox(time1.toArray());
-		JComboBox timeF = new JComboBox(time2.toArray());
+		createCB();
+		populateCB();
+	
+
 		JPanel thePanel = new JPanel();
 		JLabel label1 = new JLabel("Semester:");
 		JLabel label2 = new JLabel("Location:");
@@ -60,25 +48,43 @@ public class Request extends JFrame
 		JLabel label5 = new JLabel("to");
 		button1 = new JButton("Submit");
 		
+		
+//Action Listeners for ComboBoxes
 		semesters.addActionListener (new ActionListener () {
 		    public void actionPerformed(ActionEvent e) {
-		        System.out.println("test");
-		      //  List<WeekDays> newday = ScheduleManager.getDaysFromLocation(semesters.getSelectedItem(), Location.Dance);
-		        locations.repaint();
+		        System.out.println("Semester Changed");
+		        //updateLocations
+		        populateLocationCB();
+		        thePanel.revalidate();
+		        thePanel.repaint();
 		    }
 		});
 		
-		days.addActionListener (new ActionListener () {
+		locations.addActionListener (new ActionListener () {
 		    public void actionPerformed(ActionEvent e) {
-		        System.out.println("test");
-		        locations.repaint();
+		        System.out.println("Locations Changed");
+		        //updateDays
+		        populateDayCB();
+		        thePanel.revalidate();
+		        thePanel.repaint();
 		    }
 		});
+		
+		
+		
+		days.addActionListener (new ActionListener () {
+		    public void actionPerformed(ActionEvent e) {
+		        System.out.println("Day Changed");
+		       // updateTime
+		        populateTimeCB();
+		        thePanel.revalidate();
+		        thePanel.repaint();
+		      
+		    }
+		});
+		
+//End of Action Listeners
 
-		JTextField textField3 = new JTextField();
-		textField1.setColumns(10);
-		textField2.setColumns(10);
-		textField3.setColumns(10);
 
 
 		ListenForButton lForButton = new ListenForButton();
@@ -96,15 +102,153 @@ public class Request extends JFrame
 		thePanel.add(label5);
 		thePanel.add(timeF);
 		thePanel.add(button1);
-		//thePanel.add(locations);
-	//	thePanel.add(semesters);
 		this.add(thePanel);
 		this.setVisible(true);
 		
 
 	}
 
+//****************************************************************************
+private void populateCB() {
+	List<Semesters> allSemesters = RequestManager.getAllSemesters();
+	
+	if(allSemesters != null){		
+		for(Semesters sem : allSemesters){
+			semesters.addItem(sem);
+		}
+	}
+	
+	populateLocationCB();
+}
 
+
+//****************************************************************************
+//****************************************************************************
+private void populateLocationCB() {
+	Location[] loc = Location.class.getEnumConstants();
+	locations = new JComboBox<Location>(loc);
+	
+	populateDayCB();
+}
+
+
+//****************************************************************************
+//****************************************************************************
+private void populateDayCB() {
+	
+	Location x = (Location) locations.getSelectedItem();
+	Semesters y = (Semesters) semesters.getSelectedItem();
+	
+	List<WeekDays> day = ScheduleManager.getDaysFromLocation(y, x);
+	//temp assignment
+	day = ScheduleManager.getDaysFromLocation(Semesters.Fall, Location.Dance);
+	
+	
+	if(day != null){
+		for(WeekDays d : day){
+		days.addItem(d);
+		}
+	}
+	
+	else if(day == null){
+	
+	day = ScheduleManager.getDaysFromLocation(Semesters.Fall, Location.Dance);
+	for(WeekDays d : day){
+		days.addItem(d);
+		}
+	}
+	
+	
+/************************************************************	
+//Location Dance for all semesters
+	if(x.equals(Location.Dance)&& y.equals(Semesters.Winter)){
+		
+	day = ScheduleManager.getDaysFromLocation(Semesters.Winter, Location.Dance);
+	
+	}
+	
+	else if(x.equals(Location.Dance)&& y.equals(Semesters.Fall)){
+		
+	day = ScheduleManager.getDaysFromLocation(Semesters.Fall, Location.Dance);
+	
+	}
+	else if(x.equals(Location.Dance)&& y.equals(Semesters.Spring)){
+		
+	day = ScheduleManager.getDaysFromLocation(Semesters.Spring, Location.Dance);
+//Location Gym for all semesters
+	}
+	else if(x.equals(Location.Gym)&& y.equals(Semesters.Winter)){
+		
+	day = ScheduleManager.getDaysFromLocation(Semesters.Winter, Location.Gym);
+	
+	}
+	else if(x.equals(Location.Gym)&& y.equals(Semesters.Fall)){
+		
+	day = ScheduleManager.getDaysFromLocation(Semesters.Fall, Location.Gym);
+	
+	}
+	else if(x.equals(Location.Gym)&& y.equals(Semesters.Spring)){
+		
+	day = ScheduleManager.getDaysFromLocation(Semesters.Spring, Location.Gym);
+	
+	}
+//Location Band for all semesters
+	else if(x.equals(Location.Band)&& y.equals(Semesters.Spring)){
+		
+	day = ScheduleManager.getDaysFromLocation(Semesters.Spring, Location.Band);
+	
+	}
+	else if(x.equals(Location.Band)&& y.equals(Semesters.Fall)){
+		
+	day = ScheduleManager.getDaysFromLocation(Semesters.Fall, Location.Band);
+	
+	}
+	else if(x.equals(Location.Band)&& y.equals(Semesters.Winter)){
+		
+	day = ScheduleManager.getDaysFromLocation(Semesters.Winter, Location.Band);
+	
+	}
+************************************************************/
+	populateTimeCB();
+	
+}
+
+//****************************************************************************
+private void populateTimeCB() {
+	
+	//List<String> time1 = ScheduleManager.getDayTimeStart(Semesters.Winter, WeekDays.Tuesday);
+	//List<String> time2 = ScheduleManager.getDayTimeEnd(Semesters.Winter, WeekDays.Tuesday);
+	
+	WeekDays d = (WeekDays) days.getSelectedItem();
+	Semesters s = (Semesters) semesters.getSelectedItem();
+	
+	List<String> time1 = ScheduleManager.getDayTimeStart(s, d);
+	List<String> time2 = ScheduleManager.getDayTimeEnd(s, d);
+
+	timeS = new JComboBox(time1.toArray());
+	timeF = new JComboBox(time2.toArray());
+	
+
+}
+
+
+//****************************************************************************
+//****************************************************************************
+	private void createCB() {
+		semesters = new JComboBox<Semesters>();
+		locations = new JComboBox<Location>();
+		days = new JComboBox<WeekDays>();
+		timeS = new JComboBox<TimeSlot>();
+		timeF = new JComboBox<TimeSlot>();
+		this.add(semesters);
+		this.add(locations);
+		this.add(days);
+		this.add(timeS);
+		this.add(timeF);
+		
+	}
+
+//****************************************************************************
 	private class ListenForButton implements ActionListener
 	{
 		
@@ -118,15 +262,22 @@ public class Request extends JFrame
 			if(e.getSource() == button1)
 			{	
 				
-				System.out.println(textField2.getText());
 
-				//IOSpaceRequest request = new IOSpaceRequest();
-				//request.save(textField1.getText());
-				//int t1 = timeS.
+				String t1 = (String) timeS.getSelectedItem();
+				Object t2 = timeF.getSelectedItem();
+				System.out.println(t1.toString());
+				System.out.println(t2.toString());
+	
+			
 				
-				//TimeSlot si = new TimeSlot(9,12, WeekDays.Monday , Location.Dance);
-				//RequestManager.createRequest(s1,"Tod", s1.getStartTime(), s1.getEndTime() - 1);
+				WeekDays d = (WeekDays) days.getSelectedItem();
+				Location l = (Location) locations.getSelectedItem();
 				
+				
+				//TimeSlot s1 = new TimeSlot(i,k, d, l);
+				//RequestManager.createRequest(s1,"User", s1.getStartTime(), s1.getEndTime() - 1);
+				//Vector<TimeSlot> winterSlots = new Vector<TimeSlot>();
+				//ScheduleManager.createSchedule(winterSlots, Semesters.Winter);
 				
 				String st = "Process Complete";
 				JOptionPane.showMessageDialog(null, st);	

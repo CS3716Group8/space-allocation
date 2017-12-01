@@ -25,7 +25,7 @@ public class editRoom extends JFrame
 		this.setLocationRelativeTo(null);		
 		this.setTitle("System ");
 		JPanel thePanel = new JPanel();
-		JLabel label1 = new JLabel("Room Number:");
+		JLabel label1 = new JLabel("Location:");
 		JTextField textField1 = new JTextField();		
 		textField1.setColumns(10);
 		ListenForButton lForButton = new ListenForButton();

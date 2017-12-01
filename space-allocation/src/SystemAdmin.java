@@ -18,6 +18,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import AllocationUI.AllocationWindow;
 import ioSystem.IOSpaceRequest;
 import spaceRequests.RequestManager;
 import spaceRequests.SpaceRequest;
@@ -210,8 +211,8 @@ public class SystemAdmin extends JFrame
 //***Allocate Time Slot*******************************************************************************				
 			if(e.getSource() == button6)
 			{	
-				new Request();	
-				
+				AllocationWindow alo = new AllocationWindow();	
+				alo.setVisible(true);
 			}
 //***Deallocate Time Slot*****************************************************************************		
 			if(e.getSource() == button7)
