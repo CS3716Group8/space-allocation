@@ -6,7 +6,10 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Vector;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -14,6 +17,13 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+
+import AllocationUI.AllocationWindow;
+import ioSystem.IOSpaceRequest;
+import spaceRequests.RequestManager;
+import spaceRequests.SpaceRequest;
+
+
 
 
 
@@ -31,12 +41,13 @@ public class SystemAdmin extends JFrame
 	JButton button5;
 	JButton button6;
 	JButton button7;
-	JTextField textField1;
-	JTextField textField2;
 	JLabel label1;
 	SwingCalendar calendar;
 	SwingCalendar sc;
-	ScheduleDisplay display;
+	
+	ScheduleDisplay display = new ScheduleDisplay();
+	JTextArea textField1 = new JTextArea(25, 20);
+
 
 
 	
@@ -57,17 +68,9 @@ public class SystemAdmin extends JFrame
 		SwingCalendar sc = new SwingCalendar();
 		JPanel thePanel2 = new JPanel();
 		thePanel2.add(sc);
-		JPanel thePanel3 = new JPanel();
-		
-		JTextArea textField1 = new JTextArea(25, 20);
-		//textField1.setColumns(10);
-		
+		JPanel thePanel3 = new JPanel();		
 		thePanel3.add(textField1);
-		
-		
-		
-		JLabel label1 = new JLabel("Room Number:");
-		JLabel label2 = new JLabel("Time:");
+
 		button1 = new JButton("Create Schedule");
 		button1.setToolTipText("Creates a new Schedule");
 		button2 = new JButton("Display Schedule");
@@ -78,9 +81,6 @@ public class SystemAdmin extends JFrame
 		button6 = new JButton("Allocate Time Slot");
 		button7 = new JButton("Deallocate Time Slot");
 		
-		JTextField textField2 = new JTextField();
-		
-		textField2.setColumns(10);
 
 
 		ListenForButton lForButton = new ListenForButton();
@@ -129,9 +129,10 @@ public class SystemAdmin extends JFrame
 //***Create Schedule**********************************************************************************				
 			if(e.getSource() == button1)
 			{	
-				String st = "Schedule Created";
-				JOptionPane.showMessageDialog(null, st);	
+				//String st = "Schedule Created";
+				//JOptionPane.showMessageDialog(null, st);	
 				calendar = new SwingCalendar();
+				new Creator();
 			}
 //***Display Schedule*********************************************************************************				
 			if(e.getSource() == button2)
@@ -166,6 +167,17 @@ public class SystemAdmin extends JFrame
 			if(e.getSource() == button5)
 			{	
 				
+				
+				
+				
+				
+				
+				
+				Vector<SpaceRequest> requests = RequestManager.getRequests();
+				System.out.println(requests.toString());
+				textField1.append(requests.toString()+"\n");
+				
+	/*			
 				//get requests
 				
 				File file = new File("Requests.txt");
@@ -176,6 +188,9 @@ public class SystemAdmin extends JFrame
 				    while ((text = reader.readLine()) != null) {
 				       
 				        System.out.println(text+"\n");
+				       // textField1.append(text);
+				      //  FileWriter fw = new FileWriter("Requests.txt");
+				       // textField1.write(fw);
 				    }
 				} catch (FileNotFoundException k) {
 				    k.printStackTrace();
@@ -190,14 +205,14 @@ public class SystemAdmin extends JFrame
 				    }
 				}
 
-				
+			*/	
 		
 			}
 //***Allocate Time Slot*******************************************************************************				
 			if(e.getSource() == button6)
 			{	
-				new Request();	
-				
+				AllocationWindow alo = new AllocationWindow();	
+				alo.setVisible(true);
 			}
 //***Deallocate Time Slot*****************************************************************************		
 			if(e.getSource() == button7)
