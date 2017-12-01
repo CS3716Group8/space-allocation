@@ -25,8 +25,8 @@ public class Creator extends JFrame implements ItemListener
 	JComboBox <Semesters>semesters;
 	JComboBox <Location>locations;
 	JComboBox <WeekDays>days;
-	JComboBox <TimeSlot>timeS;
-	JComboBox <TimeSlot>timeF;
+	JTextField timeS;
+	JTextField timeF;
 	JCheckBox mon;
 	JCheckBox tue;
 	JCheckBox wed;
@@ -138,7 +138,21 @@ public class Creator extends JFrame implements ItemListener
 			if(e.getSource() == button1)
 			{	
 				
-				TimeSlot si = new TimeSlot(9,12, WeekDays.Monday , Location.Dance);
+				
+				int t1 = Integer.parseInt((String) timeS.getText());
+				int t2 = Integer.parseInt((String) timeF.getText());
+				WeekDays d = (WeekDays) days.getSelectedItem();
+				Location l = (Location) locations.getSelectedItem();
+				
+				
+				
+				//ScheduleManager.createSchedule(winterSlots, Semesters.Winter);
+
+				
+				
+				
+				
+				TimeSlot si = new TimeSlot(t1,t2, d, l);
 				Vector<TimeSlot> newSlots = new Vector<TimeSlot>();
 				newSlots.add(si);
 				ScheduleManager.createSchedule(newSlots, Semesters.Winter);
