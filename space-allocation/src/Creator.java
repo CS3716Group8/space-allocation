@@ -10,6 +10,7 @@ import spaceRequests.RequestManager;
 import spaceRequests.SpaceRequest;
 
 import java.awt.event.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
@@ -48,8 +49,8 @@ public class Creator extends JFrame implements ItemListener
 		semesters = new JComboBox<Semesters>(s);
 		locations = new JComboBox<Location>(loc);
 		
-		JTextField timeS = new JTextField("",3);
-		JTextField timeF = new JTextField("",3);
+		timeS = new JTextField("",3);
+		timeF = new JTextField("",3);
 		JPanel thePanel = new JPanel();
 		JLabel label1 = new JLabel("Semester:");
 		JLabel label2 = new JLabel("Location:");
@@ -132,37 +133,61 @@ public class Creator extends JFrame implements ItemListener
 		
 		public void actionPerformed(ActionEvent e)
 		{
-			
 			// Check if the source of the event was the button
 			
 			if(e.getSource() == button1)
 			{	
-				
-				
 				int t1 = Integer.parseInt((String) timeS.getText());
 				int t2 = Integer.parseInt((String) timeF.getText());
-				WeekDays d = (WeekDays) days.getSelectedItem();
+				
 				Location l = (Location) locations.getSelectedItem();
 				
+				List<WeekDays> selDays = getSelectedDays();
 				
+				Semesters selSemester = getCurrentlySelectedSemester(); 
+				for(WeekDays d : selDays){
+					
+					TimeSlot si = new TimeSlot(t1,t2, d, l);
+					Vector<TimeSlot> newSlots = new Vector<TimeSlot>();
+					newSlots.add(si);
+					ScheduleManager.createSchedule(newSlots, selSemester);
+				}
 				
-				//ScheduleManager.createSchedule(winterSlots, Semesters.Winter);
-
-				
-				
-				
-				
-				TimeSlot si = new TimeSlot(t1,t2, d, l);
-				Vector<TimeSlot> newSlots = new Vector<TimeSlot>();
-				newSlots.add(si);
-				ScheduleManager.createSchedule(newSlots, Semesters.Winter);
 				
 				String st = "Process Complete";
 				JOptionPane.showMessageDialog(null, st);		
 			}
-			
 		}
-		
+	}
+	
+	private List<WeekDays> getSelectedDays(){
+		List<WeekDays> days = new ArrayList<WeekDays>();
+		if(mon.isSelected()){
+			days.add(WeekDays.valueOf(mon.getText()));
+		}
+		if(tue.isSelected()){
+			days.add(WeekDays.valueOf(tue.getText()));
+		}
+		if(wed.isSelected()){
+			days.add(WeekDays.valueOf(wed.getText()));
+		}
+		if(thurs.isSelected()){
+			days.add(WeekDays.valueOf(thurs.getText()));
+		}
+		if(fri.isSelected()){
+			days.add(WeekDays.valueOf(fri.getText()));
+		}
+		if(sat.isSelected()){
+			days.add(WeekDays.valueOf(sat.getText()));
+		}
+		if(sun.isSelected()){
+			days.add(WeekDays.valueOf(sun.getText()));
+		}
+		return days;
+	}
+	
+	private Semesters getCurrentlySelectedSemester(){
+		return (Semesters)semesters.getSelectedItem();
 	}
 
 

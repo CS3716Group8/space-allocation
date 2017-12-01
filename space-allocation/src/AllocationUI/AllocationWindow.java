@@ -48,7 +48,6 @@ public class AllocationWindow extends JFrame {
 	 */
 	public AllocationWindow() {
 		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 795, 614);
 		allocationWindow = new JPanel();
 		allocationWindow.setBorder(new EmptyBorder(5, 5, 5, 5));

@@ -55,6 +55,24 @@ public class ScheduleManager {
 		return locations;
 	}
 	
+	public static String getSlotID(WeekDays day, Semesters sem, Location loc ){
+		String id = "";
+		
+		for(Schedule schedule : getInstance().schedule){
+			for(TimeSlot slot : schedule.getTimeSlots()){
+				
+				Location tstLoc = slot.getLocation();
+				Semesters tstSem = schedule.getSemester();
+				WeekDays tstDay = slot.getDay();
+
+				if(loc.equals(tstLoc) && sem.equals(tstSem) && day.equals(tstDay)){
+					id = slot.getId();
+				}
+			}
+		}
+		return id;
+	}
+	
 	public static String[][] getTimesInSchedule(Schedule schedule){
 		
 		List<String> startTimes = new ArrayList<String>();

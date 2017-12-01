@@ -89,18 +89,18 @@ class Login extends JFrame implements KeyListener
 		
 			if(username.contains("Mun")&& password.contains("Admin"))
 			{
-			String st = "Access Granted...";
-			JOptionPane.showMessageDialog(null, st);
+//			String st = "Access Granted...";
+//			JOptionPane.showMessageDialog(null, st);
 
 			new SystemAdmin();
 			loginFrame.setVisible(false);
 			
 			}
 			
-			else if(username.contains("Student")&& password.contains("Student"))
+			else if(username.contains("Requester")&& password.contains("Requester"))
 			{
-			String st = "Student Access Granted...";
-			JOptionPane.showMessageDialog(null, st);
+//			String st = "Student Access Granted...";
+//			JOptionPane.showMessageDialog(null, st);
 
 			new Request();
 			loginFrame.setVisible(false);

@@ -44,6 +44,8 @@ public class RequestManager {
 	public static List<Semesters> getAllSemesters(){
 		List<Semesters> allSem = new ArrayList<Semesters>();
 		
+		
+		
 		for(SpaceRequest request : getInstance().requests){
 			
 			Semesters sem = request.getSemesterOfSlot();

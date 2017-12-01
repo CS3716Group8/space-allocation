@@ -27,7 +27,7 @@ public class Request extends JFrame
 
 	JComboBox timeS = new JComboBox<TimeSlot>();
 	JComboBox timeF = new JComboBox<TimeSlot>();
-	JComboBox<WeekDays> days = new JComboBox();
+	JComboBox<WeekDays> days = new JComboBox<WeekDays>();
 	List<WeekDays> day;
 
 	public Request()
@@ -108,14 +108,16 @@ public class Request extends JFrame
 
 //****************************************************************************
 private void populateSemesterCB() {
-	List<Semesters> allSemesters = RequestManager.getAllSemesters();
+	List<Semesters> allSemesters = ScheduleManager.getSemesters();
 	
 	if(allSemesters != null){		
 		for(Semesters sem : allSemesters){
-			semesters.addItem(sem);
+			if(sem != null){
+				semesters.addItem(sem);
+			}
 		}
 	}
-	
+
 	populateLocationCB();
 }
 
@@ -245,13 +247,13 @@ private void removePreviousCBTimes(){
 			
 			if(e.getSource() == button1)
 			{	
-				int t1 = Integer.parseInt((String) timeS.getSelectedItem());
-				int t2 = Integer.parseInt((String) timeF.getSelectedItem());
+				int t1 = (int)timeS.getSelectedItem();
+				int t2 = (int)timeF.getSelectedItem();
 				WeekDays d = (WeekDays) days.getSelectedItem();
 				Location l = (Location) locations.getSelectedItem();
 				
-				
-				TimeSlot s1 = new TimeSlot(t1,t2, d, l);
+				String id = ScheduleManager.getSlotID(d, getSelectedSemester(), l);
+				TimeSlot s1 = new TimeSlot(t1,t2, d, l, id);
 				RequestManager.createRequest(s1,"User", s1.getStartTime(), s1.getEndTime());
 
 				
