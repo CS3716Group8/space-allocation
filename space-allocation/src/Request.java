@@ -245,13 +245,15 @@ private void removePreviousCBTimes(){
 			
 			if(e.getSource() == button1)
 			{	
-				String t1 = (String) timeS.getSelectedItem();
-				Object t2 = timeF.getSelectedItem();
-				System.out.println(t1.toString());
-				System.out.println(t2.toString());
-	
+				int t1 = Integer.parseInt((String) timeS.getSelectedItem());
+				int t2 = Integer.parseInt((String) timeF.getSelectedItem());
 				WeekDays d = (WeekDays) days.getSelectedItem();
 				Location l = (Location) locations.getSelectedItem();
+				
+				
+				TimeSlot s1 = new TimeSlot(t1,t2, d, l);
+				RequestManager.createRequest(s1,"User", s1.getStartTime(), s1.getEndTime());
+
 				
 				String st = "Process Complete";
 				JOptionPane.showMessageDialog(null, st);	
