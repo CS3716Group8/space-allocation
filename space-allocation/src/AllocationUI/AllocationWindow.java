@@ -1,10 +1,14 @@
 package AllocationUI;
 
+import java.awt.Component;
 import java.awt.EventQueue;
 import java.util.*;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import Allocation.AllocationManager;
+
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import java.awt.GridLayout;
@@ -146,10 +150,47 @@ public class AllocationWindow extends JFrame {
 		
 		btn.addActionListener(new ActionListener() { 
 		  public void actionPerformed(ActionEvent e) { 
+			  	  
+			  JButton btn = (JButton)e.getSource();
+			  JPanel slot = (JPanel)btn.getParent();
 			  
-			  System.out.println("Allocate Button Pressed");
+			  Component[] components = slot.getComponents();
+			  
+			  allocateSlot(components);
 		  } 
 		});
+	}
+	
+	//Components: Label, Label, Label, Button
+	private void allocateSlot(Component[] components){
+		
+		String requester = getTextFromComponent(components[0]);
+		Location loc = Location.valueOf( getTextFromComponent(components[1]) );
+		Semesters sem = getSelectedSemester();
+		
+		int[] times = getTimesFromComponent(components[2]);
+		int sTime = times[0];
+		int eTime = times[1];	
+		
+		AllocationManager.createAllocatedSlot(requester, loc, sem, sTime, eTime);
+	}
+	
+	private String getTextFromComponent(Component compo){
+		String txt = "";
+		JLabel lbl = (JLabel)compo;
+		txt = lbl.getText();
+		return txt;
+	}
+	
+	//Times[0] = starting time, Times[1] = end time.
+	private int[] getTimesFromComponent(Component compo){
+		int[] times = new int[2];
+		JLabel lbl = (JLabel)compo;
+		String txt = lbl.getText();
+		String[] split = txt.split(" ");
+		times[0] = Integer.parseInt(split[2]);  //Start Time
+		times[1] = Integer.parseInt(split[4]); //End Time
+		return times;
 	}
 	
 	private void createSemesterCB(){
