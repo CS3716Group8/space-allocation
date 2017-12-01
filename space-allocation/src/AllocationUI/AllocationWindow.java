@@ -1,3 +1,7 @@
+/*
+ *	Creates the Allocation window
+ *	@author Alex Gillis
+*/
 package AllocationUI;
 
 import java.awt.Component;

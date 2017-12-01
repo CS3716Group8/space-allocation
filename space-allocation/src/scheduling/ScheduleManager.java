@@ -1,3 +1,8 @@
+/*
+ *	Handles the creation and retrieving of Schedule Data
+ *	@author Ling Xu, Alex Gillis
+*/
+
 package scheduling;
 import java.io.FileNotFoundException;
 import java.util.*;

@@ -1,3 +1,8 @@
+/*
+ *	Concrete Implementation of IOMethod
+ *	Handles saving and loading of AllocatedSlot data
+ *	@author Ling Xu
+*/
 package ioSystem;
 import java.io.*;
 import java.util.*;

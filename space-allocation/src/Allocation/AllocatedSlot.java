@@ -1,3 +1,7 @@
+/*
+ *	Data Structure for a space after allocation
+ *	@author Ling Xu
+*/
 package Allocation;
 import scheduling.*;
 

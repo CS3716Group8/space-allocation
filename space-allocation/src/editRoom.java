@@ -1,3 +1,7 @@
+/*
+ *	Defines the edit room window
+ *	@author Dylan Kennedy
+*/
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import javax.swing.*;

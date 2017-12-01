@@ -1,3 +1,8 @@
+/*
+ *	Handles the creation and retrieving of SpaceRequest Data
+ *	@author Alex Gillis
+*/
+
 package spaceRequests;
 
 import java.io.FileNotFoundException;

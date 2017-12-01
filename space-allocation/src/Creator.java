@@ -1,3 +1,8 @@
+/*
+ *	Opens the Schedule creation window
+ *	@author Dylan Kennedy, Alex Gillis
+*/
+
 import javax.swing.*;
 
 import ioSystem.IOSpaceRequest;

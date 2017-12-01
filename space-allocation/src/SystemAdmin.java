@@ -1,3 +1,7 @@
+/*
+ *	Defines the System Administration window
+ *	@author Dylan Kennedy
+*/
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -34,12 +38,12 @@ public class SystemAdmin extends JFrame
 	 */
 	private static final long serialVersionUID = 1L;
 	JFrame mainFrame;
-	JButton button1;
+	JButton schBtn;
 	JButton button2;
 	JButton button3;
 	JButton button4;
-	JButton button5;
-	JButton button6;
+	JButton viewReqBtn;
+	JButton allocBtn;
 	JButton button7;
 	JLabel label1;
 	SwingCalendar calendar;
@@ -71,38 +75,38 @@ public class SystemAdmin extends JFrame
 		JPanel thePanel3 = new JPanel();		
 		thePanel3.add(textField1);
 
-		button1 = new JButton("Create Schedule");
-		button1.setToolTipText("Creates a new Schedule");
+		schBtn = new JButton("Create Schedule");
+		schBtn.setToolTipText("Creates a new Schedule");
 		button2 = new JButton("Display Schedule");
 		button3 = new JButton("Add Room");
 		button4 = new JButton("Remove Room");
-		button5 = new JButton("Get Requests");
-		button5.setToolTipText("View Time Requests");
-		button6 = new JButton("Allocate Time Slot");
+		viewReqBtn = new JButton("Get Requests");
+		viewReqBtn.setToolTipText("View Time Requests");
+		allocBtn = new JButton("Allocate Time Slot");
 		button7 = new JButton("Deallocate Time Slot");
 		
 
 
 		ListenForButton lForButton = new ListenForButton();
 
-		button1.addActionListener(lForButton);
+		schBtn.addActionListener(lForButton);
 		button2.addActionListener(lForButton);
 		button3.addActionListener(lForButton);
 		button4.addActionListener(lForButton);
-		button5.addActionListener(lForButton);
-		button6.addActionListener(lForButton);
+		viewReqBtn.addActionListener(lForButton);
+		allocBtn.addActionListener(lForButton);
 		button7.addActionListener(lForButton);
 	
 		GridLayout experimentLayout = new GridLayout(7,0);
 		
 		thePanel.setLayout(experimentLayout);
-		thePanel.add(button1);
-		thePanel.add(button2);
-		thePanel.add(button3);
-		thePanel.add(button4);
-		thePanel.add(button5);
-		thePanel.add(button6);
-		thePanel.add(button7);
+		thePanel.add(schBtn);
+//		thePanel.add(button2);
+//		thePanel.add(button3);
+//		thePanel.add(button4);
+		thePanel.add(viewReqBtn);
+		thePanel.add(allocBtn);
+//		thePanel.add(button7);
 
 		mainFrame.add("West",thePanel);
 		mainFrame.add("Center",thePanel2);
@@ -127,7 +131,7 @@ public class SystemAdmin extends JFrame
 			
 			// Check if the source of the event was the button
 //***Create Schedule**********************************************************************************				
-			if(e.getSource() == button1)
+			if(e.getSource() == schBtn)
 			{	
 				//String st = "Schedule Created";
 				//JOptionPane.showMessageDialog(null, st);	
@@ -164,7 +168,7 @@ public class SystemAdmin extends JFrame
 				
 			}
 //***Get Requests*************************************************************************************			
-			if(e.getSource() == button5)
+			if(e.getSource() == viewReqBtn)
 			{	
 				
 				
@@ -186,7 +190,7 @@ public class SystemAdmin extends JFrame
 		
 			}
 //***Allocate Time Slot*******************************************************************************				
-			if(e.getSource() == button6)
+			if(e.getSource() == allocBtn)
 			{	
 				AllocationWindow alo = new AllocationWindow();	
 				alo.setVisible(true);

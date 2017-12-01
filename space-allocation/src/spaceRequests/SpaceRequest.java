@@ -1,3 +1,7 @@
+/*
+ *	Defines the Space Request data structure
+ *	@author Alex Gillis
+*/
 package spaceRequests;
 
 import java.util.UUID;

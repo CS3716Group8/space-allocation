@@ -1,3 +1,8 @@
+/*
+ *	Defines the TimeSlot data structure
+ *	@author Ling Xu, Alex Gillis
+*/
+
 package scheduling;
 
 import java.util.UUID;

@@ -1,3 +1,7 @@
+/*
+ *	Location Enumerations
+ *	@author Alex Gillis
+*/
 package scheduling;
 
 public enum Location {

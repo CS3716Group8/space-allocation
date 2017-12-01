@@ -1,3 +1,8 @@
+/*
+ *	Defines the Schedule Display panel
+ *	@author Dylan Kennedy
+*/
+
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;

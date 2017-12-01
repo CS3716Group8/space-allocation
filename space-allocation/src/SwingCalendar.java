@@ -1,3 +1,7 @@
+/*
+ *	Defines the Schedule Calendar
+ *	@author Dylan Kennedy
+*/
 import java.util.*;
 import java.awt.*;
 import java.awt.event.*;

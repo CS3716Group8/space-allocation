@@ -1,3 +1,8 @@
+/*
+ *	Concrete Implementation of IOMethod
+ *	Handles saving and loading of Schedule data
+ *	@author Alex Gillis
+*/
 package ioSystem;
 
 import java.io.FileNotFoundException;

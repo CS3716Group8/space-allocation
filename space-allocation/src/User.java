@@ -1,4 +1,7 @@
-
+/*
+ *	Defines A User. Not yet Implemented.
+ *	@author Dylan Kennedy
+*/
 public class User {
 	private String userName;
 	private int userNum;

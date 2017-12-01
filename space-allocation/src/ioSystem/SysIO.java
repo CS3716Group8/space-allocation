@@ -1,3 +1,7 @@
+/*
+ *	Uses an IOMethod to save/load data across the program
+ *	@author Alex Gillis
+*/
 package ioSystem;
 
 import java.io.FileNotFoundException;

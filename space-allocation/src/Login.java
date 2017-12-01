@@ -1,4 +1,7 @@
-
+/*
+ *	Creates Login window
+ *	@author Dylan Kennedy
+*/
 
 import java.awt.*;
 import java.awt.event.*;
@@ -7,9 +10,6 @@ import java.text.*;
 import java.util.*;
 class Login extends JFrame implements KeyListener
 {
-	
-	
-
 	// Store name
 	public static String username;
 	public static String password;
@@ -19,7 +19,7 @@ class Login extends JFrame implements KeyListener
 	private JLabel userLabel;
 	private JTextField userText;
 	private JLabel passLabel;
-	private JTextField passText;
+	private JPasswordField passText;
 	private int count = 0;
 	
 	public int getCount()
@@ -37,7 +37,7 @@ class Login extends JFrame implements KeyListener
 		userLabel = new JLabel("Username :");
 		userText = new JTextField("", 10);
 		passLabel = new JLabel("Password :");
-		passText = new JTextField("", 10);
+		passText = new JPasswordField("", 10);
 		userText.setFont(new Font("",Font.BOLD,12));
 		passText.setFont(new Font("",Font.BOLD,12));
 	}

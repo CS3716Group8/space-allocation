@@ -1,3 +1,7 @@
+/*
+ *	Handles the creation and processing of allocated space
+ *	@author Ling Xu
+*/
 package Allocation;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;

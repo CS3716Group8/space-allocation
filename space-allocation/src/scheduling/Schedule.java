@@ -1,3 +1,8 @@
+/*
+ *	Defines the Schedule data structure
+ *	@author Ling Xu
+*/
+
 package scheduling;
 import java.util.Vector;
 

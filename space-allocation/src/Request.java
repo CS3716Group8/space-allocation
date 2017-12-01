@@ -1,3 +1,8 @@
+/*
+ *	Creates Requester window
+ *	@author Dylan Kennedy, Alex Gillis
+*/
+
 import javax.swing.*;
 
 import ioSystem.IOSpaceRequest;

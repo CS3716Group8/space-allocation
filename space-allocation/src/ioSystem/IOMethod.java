@@ -1,3 +1,7 @@
+/*
+ *	Abstract class for saving methods
+ *	@author Alex Gillis
+*/
 package ioSystem;
 
 import java.io.BufferedReader;

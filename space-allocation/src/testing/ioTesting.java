@@ -1,3 +1,7 @@
+/*
+ *	Testing File. Not part of the main program.
+ *	@author Alex Gillis
+*/
 package testing;
 
 import scheduling.*;

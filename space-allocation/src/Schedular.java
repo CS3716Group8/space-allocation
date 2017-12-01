@@ -1,3 +1,7 @@
+/*
+ *	Starts the Allocation System Program
+ *	@author Dylan Kennedy
+*/
 import javax.swing.*;
 
 public class Schedular extends JFrame
