@@ -169,43 +169,20 @@ public class SystemAdmin extends JFrame
 				
 				
 				
-				
-				
-				
-				
 				Vector<SpaceRequest> requests = RequestManager.getRequests();
-				System.out.println(requests.toString());
-				textField1.append(requests.toString()+"\n");
-				
-	/*			
-				//get requests
-				
-				File file = new File("Requests.txt");
-				BufferedReader reader = null;try {
-				    reader = new BufferedReader(new FileReader(file));
-				    String text = null;
-
-				    while ((text = reader.readLine()) != null) {
-				       
-				        System.out.println(text+"\n");
-				       // textField1.append(text);
-				      //  FileWriter fw = new FileWriter("Requests.txt");
-				       // textField1.write(fw);
-				    }
-				} catch (FileNotFoundException k) {
-				    k.printStackTrace();
-				} catch (IOException k) {
-				    k.printStackTrace();
-				} finally {
-				    try {
-				        if (reader != null) {
-				            reader.close();
-				        }
-				    } catch (IOException k) {
-				    }
+				String str = "";
+				for(SpaceRequest r:requests)
+				{
+					str +=  "Name: "+r.getRequester() +"\n"+ 
+							"Semester: "+ r.getSemesterOfSlot().name() +"\n"+
+							"Location: "+r.getLocationOfSlot().name() +"\n"+
+							"Day: "+r.getSlot().getDay()+"\n"+
+							"Start Time: "+r.getStartTime()+"\n"+
+							"End Time: "+r.getEndTime()+"\n \n";
 				}
-
-			*/	
+				textField1.append(str);
+				
+	
 		
 			}
 //***Allocate Time Slot*******************************************************************************				
